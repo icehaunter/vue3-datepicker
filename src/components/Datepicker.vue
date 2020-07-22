@@ -2,14 +2,19 @@
   <div class="v3dp__datepicker">
     <input
       type="text"
+      readonly="readonly"
       v-model="input"
       :placeholder="placeholder"
+      @blur="viewShown = 'none'"
       @focus="viewShown = startingView"
+      @click="viewShown = startingView"
     />
     <year-picker
       v-show="viewShown === 'year'"
       v-model:pageDate="pageDate"
       :selected="modelValue"
+      :lowerLimit="lowerLimit"
+      :upperLimit="upperLimit"
       @select="selectYear"
     />
     <month-picker
@@ -17,6 +22,8 @@
       v-model:pageDate="pageDate"
       :selected="modelValue"
       @select="selectMonth"
+      :lowerLimit="lowerLimit"
+      :upperLimit="upperLimit"
       @back="viewShown = 'year'"
     />
     <day-picker
@@ -24,6 +31,8 @@
       v-model:pageDate="pageDate"
       :selected="modelValue"
       :weekStartsOn="weekStartsOn"
+      :lowerLimit="lowerLimit"
+      :upperLimit="upperLimit"
       @select="selectDay"
       @back="viewShown = 'month'"
     />
@@ -108,9 +117,10 @@ export default defineComponent({
       viewShown.value = 'day'
     }
     const selectDay = (date: Date) => {
+      console.log('DaySelected')
       emit('update:modelValue', date)
 
-      // viewShown.value = 'none'
+      viewShown.value = 'none'
     }
 
     return {
@@ -120,6 +130,7 @@ export default defineComponent({
       selectMonth,
       selectDay,
       viewShown,
+      log: (e: any) => console.log(e),
     }
   },
 })
@@ -150,5 +161,7 @@ export default defineComponent({
   --elem-border-radius: var(--vdp-elem-border-radius, 3px);
 
   --divider-color: var(--vpd-divider-color, var(--elem-disabled-color));
+
+  position: relative;
 }
 </style>

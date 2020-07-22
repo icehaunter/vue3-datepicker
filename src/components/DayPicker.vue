@@ -1,6 +1,8 @@
 <template>
   <picker-popup
     headingClickable
+    :leftDisabled="leftDisabled"
+    :rightDisabled="rightDisabled"
     @left="previousPage"
     @right="nextPage"
     @heading="$emit('back')"
@@ -31,12 +33,16 @@ import {
   eachDayOfInterval,
   subMonths,
   addMonths,
-  // format,
   startOfWeek,
   endOfWeek,
   isSameDay,
   setDay,
   isWithinInterval,
+  isBefore,
+  isAfter,
+  isSameMonth,
+  endOfDay,
+  startOfDay,
 } from 'date-fns'
 import { formatWithOptions } from 'date-fns/fp'
 import PickerPopup from './PickerPopup.vue'
@@ -58,6 +64,8 @@ declare const props: {
   weekdayFormat?: string
   locale?: Locale
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
+  lowerLimit?: Date
+  upperLimit?: Date
 }
 
 const format = computed(() =>
@@ -95,6 +103,17 @@ export const weekDays = computed(() => {
     .map(dayFormat)
 })
 
+const isEnabled = (
+  target: Date,
+  lower: Date | undefined,
+  upper: Date | undefined
+): boolean => {
+  if (!lower && !upper) return true
+  if (lower && isBefore(target, startOfDay(lower))) return false
+  if (upper && isAfter(target, endOfDay(upper))) return false
+  return true
+}
+
 export const days = computed(() => {
   const dayFormat = format.value(props.format ?? 'dd')
 
@@ -102,13 +121,28 @@ export const days = computed(() => {
     value,
     day: dayFormat(value),
     selected: props.selected && isSameDay(props.selected, value),
-    disabled: !isWithinInterval(value, currentMonth.value),
+    disabled:
+      !isWithinInterval(value, currentMonth.value) ||
+      !isEnabled(value, props.lowerLimit, props.upperLimit),
     key: format.value('yyyy-MM-dd', value),
   }))
 })
 
 export const heading = computed(() =>
   format.value(props.headingFormat ?? 'MMMM yyyy')(props.pageDate)
+)
+
+export const leftDisabled = computed(
+  () =>
+    props.lowerLimit &&
+    (isSameMonth(props.lowerLimit, props.pageDate) ||
+      isBefore(props.pageDate, props.lowerLimit))
+)
+export const rightDisabled = computed(
+  () =>
+    props.upperLimit &&
+    (isSameMonth(props.upperLimit, props.pageDate) ||
+      isAfter(props.pageDate, props.upperLimit))
 )
 
 export const previousPage = () =>

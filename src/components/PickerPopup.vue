@@ -2,6 +2,7 @@
   <div
     class="popout"
     :style="{ '--popout-column-definition': `repeat(${columnCount}, 1fr)` }"
+    @mousedown.prevent
   >
     <div class="popout-heading">
       <button
@@ -97,8 +98,12 @@ export default defineComponent({
 
 <style scoped>
 .popout {
-  max-width: 17.5em;
-  background-color: var(--bg-color);
+  z-index: 10;
+  position: absolute;
+  /* bottom: 0; */
+  text-align: center;
+  width: 17.5em;
+  background-color: var(--popout-bg-color);
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
   padding: 8px 0 1em;
@@ -129,7 +134,8 @@ export default defineComponent({
   width: var(--heading-size);
 }
 
-button.heading-center:hover, .heading-button:not(:disabled):hover {
+button.heading-center:hover,
+.heading-button:not(:disabled):hover {
   background-color: var(--heading-hover-color);
 }
 
@@ -144,6 +150,10 @@ button.heading-center:hover, .heading-button:not(:disabled):hover {
 .heading-button-icon {
   height: 12px;
   stroke: var(--arrow-color);
+}
+
+button:disabled .heading-button-icon {
+  stroke: var(--elem-disabled-color);
 }
 
 button {
