@@ -1,0 +1,118 @@
+<template>
+  <picker-popup
+    headingClickable
+    @left="previousPage"
+    @right="nextPage"
+    @heading="$emit('back')"
+  >
+    <template #heading>{{ heading }}</template>
+    <template #body>
+      <div class="subheading">
+        <span v-for="day in weekDays" :key="day"> {{ day }} </span>
+      </div>
+      <div class="elements">
+        <button
+          v-for="{ day, value, disabled } in days"
+          :key="value"
+          :disabled="disabled"
+          @click.stop.prevent="$emit('select', value)"
+        >
+          {{ day }}
+        </button>
+      </div>
+    </template>
+  </picker-popup>
+</template>
+
+<script setup="props, { emit }" lang="ts">
+import { defineComponent, computed, ref, watchEffect, PropType } from 'vue'
+import {
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  subMonths,
+  addMonths,
+  // format,
+  startOfWeek,
+  endOfWeek,
+  isSameDay,
+  setDay,
+  isWithinInterval,
+} from 'date-fns'
+import { formatWithOptions } from 'date-fns/fp'
+import PickerPopup from './PickerPopup.vue'
+
+export default {
+  components: {
+    PickerPopup,
+  },
+}
+
+declare const props: {
+  /**
+   * Currently selected date, needed for highlighting
+   */
+  selected?: Date
+  pageDate: Date
+  format?: string
+  headingFormat?: string
+  weekdayFormat?: string
+  locale?: Locale
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
+}
+
+const format = computed(() =>
+  formatWithOptions({
+    locale: props.locale,
+    weekStartsOn: props.weekStartsOn ?? 1,
+  })
+)
+
+declare const emit: (event: string, data?: any) => void
+
+const monthStart = computed(() => startOfMonth(props.pageDate))
+const monthEnd = computed(() => endOfMonth(props.pageDate))
+
+const currentMonth = computed(() => ({
+  start: monthStart.value,
+  end: monthEnd.value,
+}))
+const displayedInterval = computed(() => ({
+  start: startOfWeek(monthStart.value),
+  end: endOfWeek(monthEnd.value),
+}))
+
+export const weekDays = computed(() => {
+  const initial = props.weekStartsOn ?? 1
+  const dayFormat = format.value(props.weekdayFormat ?? 'EE')
+
+  return Array.from(Array(7))
+    .map((_, i) => (initial + i) % 7)
+    .map((v) =>
+      setDay(new Date(), v, {
+        weekStartsOn: props.weekStartsOn ?? 1,
+      })
+    )
+    .map(dayFormat)
+})
+
+export const days = computed(() => {
+  const dayFormat = format.value(props.format ?? 'dd')
+
+  return eachDayOfInterval(displayedInterval.value).map((value) => ({
+    value,
+    day: dayFormat(value),
+    selected: props.selected && isSameDay(props.selected, value),
+    disabled: !isWithinInterval(value, currentMonth.value),
+  }))
+})
+
+export const heading = computed(() =>
+  format.value(props.headingFormat ?? 'MMMM yyyy')(props.pageDate)
+)
+
+export const previousPage = () =>
+  emit('update:pageDate', subMonths(props.pageDate, 1))
+export const nextPage = () =>
+  emit('update:pageDate', addMonths(props.pageDate, 1))
+</script>

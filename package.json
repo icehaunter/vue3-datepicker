@@ -1,0 +1,20 @@
+{
+  "name": "vue3-datepicker",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.0.0-rc.1",
+    "eslint": "^7.5.0",
+    "prettier": "^2.0.5",
+    "vite": "^1.0.0-rc.1"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0-rc.1"
+  },
+  "dependencies": {
+    "date-fns": "^2.15.0"
+  }
+}
