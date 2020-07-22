@@ -1,5 +1,5 @@
 <template>
-  <picker-popup @left="previousPage" @right="nextPage">
+  <picker-popup @left="previousPage" @right="nextPage" :columnCount="3">
     <template #heading>{{ heading }}</template>
     <template #body>
       <button
@@ -7,7 +7,7 @@
         :key="year"
         @click.stop.prevent="$emit('select', value)"
       >
-        {{ year }}
+        <span>{{ year }}</span>
       </button>
     </template>
   </picker-popup>
@@ -50,7 +50,7 @@ export const years = computed(() =>
   }).map((value) => ({
     value,
     year: getYear(value),
-    selected: props.selected && getYear(value) === getYear(props.selected)
+    selected: props.selected && getYear(value) === getYear(props.selected),
   }))
 )
 

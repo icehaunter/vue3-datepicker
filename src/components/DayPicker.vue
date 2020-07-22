@@ -6,20 +6,19 @@
     @heading="$emit('back')"
   >
     <template #heading>{{ heading }}</template>
+    <template #subheading>
+      <span v-for="day in weekDays" :key="day"> {{ day }} </span>
+    </template>
     <template #body>
-      <div class="subheading">
-        <span v-for="day in weekDays" :key="day"> {{ day }} </span>
-      </div>
-      <div class="elements">
-        <button
-          v-for="{ day, value, disabled } in days"
-          :key="value"
-          :disabled="disabled"
-          @click.stop.prevent="$emit('select', value)"
-        >
-          {{ day }}
-        </button>
-      </div>
+      <button
+        v-for="{ day, value, disabled, selected, key } in days"
+        :class="{ selected }"
+        :key="key"
+        :disabled="disabled"
+        @click.stop.prevent="$emit('select', value)"
+      >
+        <span>{{ day }}</span>
+      </button>
     </template>
   </picker-popup>
 </template>
@@ -104,6 +103,7 @@ export const days = computed(() => {
     day: dayFormat(value),
     selected: props.selected && isSameDay(props.selected, value),
     disabled: !isWithinInterval(value, currentMonth.value),
+    key: format.value('yyyy-MM-dd', value),
   }))
 })
 
@@ -116,3 +116,5 @@ export const previousPage = () =>
 export const nextPage = () =>
   emit('update:pageDate', addMonths(props.pageDate, 1))
 </script>
+
+<style></style>

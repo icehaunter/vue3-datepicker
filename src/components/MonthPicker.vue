@@ -1,5 +1,11 @@
 <template>
-  <picker-popup headingClickable @left="previousPage" @right="nextPage" @heading="$emit('back')">
+  <picker-popup
+    headingClickable
+    :columnCount="3"
+    @left="previousPage"
+    @right="nextPage"
+    @heading="$emit('back')"
+  >
     <template #heading>{{ heading }}</template>
     <template #body>
       <button
@@ -7,7 +13,7 @@
         :key="month"
         @click.stop.prevent="$emit('select', value)"
       >
-        {{ month }}
+        <span>{{ month }}</span>
       </button>
     </template>
   </picker-popup>
