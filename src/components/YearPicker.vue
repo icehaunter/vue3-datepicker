@@ -1,22 +1,14 @@
 <template>
   <picker-popup
-    @left="previousPage"
-    @right="nextPage"
     :columnCount="3"
     :leftDisabled="leftDisabled"
     :rightDisabled="rightDisabled"
+    :items="years"
+    @left="previousPage"
+    @right="nextPage"
+    @elementClick="$emit('select', $event)"
   >
     <template #heading>{{ heading }}</template>
-    <template #body>
-      <button
-        v-for="{ year, value, disabled } in years"
-        :key="year"
-        :disabled="disabled"
-        @click.stop.prevent="$emit('select', value)"
-      >
-        <span>{{ year }}</span>
-      </button>
-    </template>
   </picker-popup>
 </template>
 
@@ -68,7 +60,8 @@ export const years = computed(() =>
     end: to.value,
   }).map((value) => ({
     value,
-    year: getYear(value),
+    key: String(getYear(value)),
+    display: getYear(value),
     selected: props.selected && getYear(value) === getYear(props.selected),
     disabled: !isEnabled(value, props.lowerLimit, props.upperLimit)
   }))

@@ -2,23 +2,15 @@
   <picker-popup
     headingClickable
     :columnCount="3"
+    :items="months"
+    :leftDisabled="leftDisabled"
+    :rightDisabled="rightDisabled"
     @left="previousPage"
     @right="nextPage"
     @heading="$emit('back')"
-    :leftDisabled="leftDisabled"
-    :rightDisabled="rightDisabled"
+    @elementClick="$emit('select', $event)"
   >
     <template #heading>{{ heading }}</template>
-    <template #body>
-      <button
-        v-for="{ month, value, disabled } in months"
-        :key="month"
-        :disabled="disabled"
-        @click.stop.prevent="$emit('select', value)"
-      >
-        <span>{{ month }}</span>
-      </button>
-    </template>
   </picker-popup>
 </template>
 
@@ -78,7 +70,8 @@ export const months = computed(() =>
     end: to.value,
   }).map((value) => ({
     value,
-    month: format(value, props.format ?? 'MMM'),
+    display: format(value, props.format ?? 'MMM'),
+    key: format(value, props.format ?? 'MMM'),
     selected: props.selected && isSameMonth(props.selected, value),
     disabled: !isEnabled(value, props.lowerLimit, props.upperLimit)
   }))

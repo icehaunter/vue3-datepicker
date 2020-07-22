@@ -1,18 +1,18 @@
 <template>
   <div
-    class="popout"
+    class="v3dp__popout"
     :style="{ '--popout-column-definition': `repeat(${columnCount}, 1fr)` }"
     @mousedown.prevent
   >
-    <div class="popout-heading">
+    <div class="v3dp__heading">
       <button
-        class="heading-button"
+        class="v3dp__heading__button"
         :disabled="leftDisabled"
         @click.stop.prevent="$emit('left')"
       >
         <slot name="arrow-left">
           <svg
-            class="heading-button-icon"
+            class="v3dp__heading__icon"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 6 8"
           >
@@ -29,19 +29,19 @@
       </button>
       <component
         :is="headingClickable ? 'button' : 'span'"
-        class="heading-center"
+        class="v3dp__heading__center"
         @click.stop.prevent="$emit('heading')"
       >
         <slot name="heading" />
       </component>
       <button
-        class="heading-button"
+        class="v3dp__heading__button"
         :disabled="rightDisabled"
         @click.stop.prevent="$emit('right')"
       >
         <slot name="arrow-right">
           <svg
-            class="heading-button-icon"
+            class="v3dp__heading__icon"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 6 8"
           >
@@ -57,22 +57,32 @@
         </slot>
       </button>
     </div>
-    <div class="popout-body">
+    <div class="v3dp__body">
       <template v-if="'subheading' in $slots">
-        <div class="subheading">
+        <div class="v3dp__subheading">
           <slot name="subheading" />
         </div>
-        <hr class="divider" />
+        <hr class="v3dp__divider" />
       </template>
-      <div class="elements">
-        <slot name="body" />
+      <div class="v3dp__elements">
+        <slot name="body">
+          <button
+            v-for="item in items"
+            :key="item.key"
+            :disabled="item.disabled"
+            :class="{ selected: item.selected }"
+            @click.stop.prevent="$emit('elementClick', item.value)"
+          >
+            <span>{{ item.display }}</span>
+          </button>
+        </slot>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   props: {
@@ -92,12 +102,16 @@ export default defineComponent({
       type: Number,
       default: 7,
     },
+    items: {
+      type: Array as PropType<Array<{key: string, value: any, display: any, disabled: boolean, selected: boolean}>>,
+      default: () => []
+    }
   },
 })
 </script>
 
 <style scoped>
-.popout {
+.v3dp__popout {
   z-index: 10;
   position: absolute;
   /* bottom: 0; */
@@ -110,13 +124,23 @@ export default defineComponent({
   color: inherit;
 }
 
-.popout * {
+.v3dp__popout * {
   color: inherit;
   font-size: inherit;
   font-weight: inherit;
 }
 
-.popout-heading {
+.v3dp__popout button {
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.v3dp__popout button:not(:disabled) {
+  cursor: pointer;
+}
+
+.v3dp__heading {
   width: 100%;
   display: flex;
   height: var(--heading-size);
@@ -124,7 +148,7 @@ export default defineComponent({
   font-weight: var(--heading-weight);
 }
 
-.heading-button {
+.v3dp__heading__button {
   background: none;
   border: none;
   padding: 0;
@@ -134,71 +158,64 @@ export default defineComponent({
   width: var(--heading-size);
 }
 
-button.heading-center:hover,
-.heading-button:not(:disabled):hover {
+button.v3dp__heading__center:hover,
+.v3dp__heading__button:not(:disabled):hover {
   background-color: var(--heading-hover-color);
 }
 
-.popout button:not(:disabled) {
-  cursor: pointer;
-}
 
-.heading-center {
+.v3dp__heading__center {
   flex: 1;
 }
 
-.heading-button-icon {
+.v3dp__heading__icon {
   height: 12px;
   stroke: var(--arrow-color);
 }
 
-button:disabled .heading-button-icon {
+.v3dp__heading__button:disabled .v3dp__heading__icon {
   stroke: var(--elem-disabled-color);
 }
 
-button {
-  background: none;
-  border: none;
-  outline: none;
-}
 
-.popout-body .subheading,
-.popout-body .elements {
+
+.v3dp__subheading,
+.v3dp__elements {
   display: grid;
   grid-template-columns: var(--popout-column-definition);
   font-size: var(--elem-font-size);
 }
 
-.popout-body .subheading {
+.v3dp__subheading {
   margin-top: 1em;
 }
 
-.popout-body .divider {
+.v3dp__divider {
   border: 1px solid var(--divider-color);
   border-radius: 3px;
 }
 
-.popout-body .elements button:disabled {
+.v3dp__elements button:disabled {
   color: var(--elem-disabled-color);
 }
 
-.popout-body .elements button {
+.v3dp__elements button {
   padding: 0.3em 0.6em;
 }
 
-.popout-body .elements button span {
+.v3dp__elements button span {
   display: block;
   line-height: 1.9em;
   height: 1.8em;
   border-radius: var(--elem-border-radius);
 }
 
-.popout-body .elements button:not(:disabled):hover span {
+.v3dp__elements button:not(:disabled):hover span {
   background-color: var(--elem-hover-bg-color);
   color: var(--elem-hover-color);
 }
 
-.popout-body .elements button.selected span {
+.v3dp__elements button.selected span {
   background-color: var(--elem-selected-bg-color);
   color: var(--elem-selected-color);
 }

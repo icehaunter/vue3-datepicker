@@ -3,24 +3,15 @@
     headingClickable
     :leftDisabled="leftDisabled"
     :rightDisabled="rightDisabled"
+    :items="days"
     @left="previousPage"
     @right="nextPage"
     @heading="$emit('back')"
+    @elementClick="$emit('select', $event)"
   >
     <template #heading>{{ heading }}</template>
     <template #subheading>
       <span v-for="day in weekDays" :key="day"> {{ day }} </span>
-    </template>
-    <template #body>
-      <button
-        v-for="{ day, value, disabled, selected, key } in days"
-        :class="{ selected }"
-        :key="key"
-        :disabled="disabled"
-        @click.stop.prevent="$emit('select', value)"
-      >
-        <span>{{ day }}</span>
-      </button>
     </template>
   </picker-popup>
 </template>
@@ -119,7 +110,7 @@ export const days = computed(() => {
 
   return eachDayOfInterval(displayedInterval.value).map((value) => ({
     value,
-    day: dayFormat(value),
+    display: dayFormat(value),
     selected: props.selected && isSameDay(props.selected, value),
     disabled:
       !isWithinInterval(value, currentMonth.value) ||
