@@ -32,7 +32,7 @@ Main interaction to date selection is done via `v-model` with `Date` as expected
 |---|---|---|---|
 |`upperLimit`|`Date`||Upper limit for available dates for picking|
 |`lowerLimit`|`Date`||Lower limit for available dates for picking|
-|`startingView`| `'day' | 'month' | 'year'` | `'day'` |View on which the date picker should open. Can be either `year`, `month`, or `day` |
+|`startingView`| `'day' \| 'month' \| 'year'` | `'day'` |View on which the date picker should open. Can be either `year`, `month`, or `day` |
 | `monthHeadingFormat` | `String` | `LLLL yyyy` | `date-fns`-type formatting for a month view heading
 | `weekdayFormat` | `String` | `EE` | `date-fns`-type formatting for a line of weekdays on day view
 | `inputFormat` | `String` | `yyyy-MM-dd` | `date-fns`-type format in which the string in the input should be both parsed and displayed |
