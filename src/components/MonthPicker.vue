@@ -59,7 +59,7 @@ export default defineComponent({
     format: {
       type: String,
       required: false,
-      default: 'MMM'
+      default: 'MMM',
     },
     lowerLimit: {
       type: Date as PropType<Date>,

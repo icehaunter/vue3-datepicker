@@ -92,11 +92,11 @@ export default defineComponent({
     inputFormat: {
       type: String,
       required: false,
-      default: 'yyyy-MM-dd'
+      default: 'yyyy-MM-dd',
     },
     locale: {
       type: Object as PropType<Locale>,
-      required: false
+      required: false,
     },
     /**
      * Day on which the week should start.

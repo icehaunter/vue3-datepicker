@@ -95,7 +95,7 @@ type Item = {
 
 export default defineComponent({
   emits: {
-    'elementClick': (value: Date) => isValid(value),
+    elementClick: (value: Date) => isValid(value),
     left: () => true,
     right: () => true,
     heading: () => true,
