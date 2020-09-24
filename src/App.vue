@@ -4,7 +4,7 @@
     <datepicker class="picker" v-model="selected" :locale="locale" :upperLimit="to" :lowerLimit="from" />
   </div>
   <div>
-    <datepicker class="picker" v-model="from" :locale="locale" placeholder="from" />
+    <datepicker class="picker" weekday-format="iiiiii" v-model="from" :locale="locale" placeholder="from" />
   </div>
   <div>
     <datepicker class="picker" v-model="to" :locale="locale" placeholder="to" />

@@ -62,38 +62,66 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    /**
+     * `v-model` for selected date
+     */
     modelValue: {
       type: Date as PropType<Date>,
       required: false,
     },
+    /**
+     * Upper limit for available dates for picking
+     */
     upperLimit: {
       type: Date,
       required: false,
     },
+    /**
+     * Lower limit for available dates for picking
+     */
     lowerLimit: {
       type: Date,
       required: false,
     },
+    /**
+     * View on which the date picker should open. Can be either `year`, `month`, or `day`
+     */
     startingView: {
       type: String as PropType<'year' | 'month' | 'day'>,
       required: false,
       default: 'day',
+      validate: (v: unknown) =>
+        typeof v === 'string' && ['day', 'month', 'year'].includes(v),
     },
+    /**
+     * `date-fns`-type formatting for a month view heading
+     */
     monthHeadingFormat: {
       type: String,
       required: false,
       default: 'LLLL yyyy',
     },
+    /**
+     * `date-fns`-type formatting for a line of weekdays on day view
+     */
     weekdayFormat: {
       type: String,
       required: false,
       default: 'EE',
     },
+    /**
+     * `date-fns`-type format in which the string in the input should be both
+     * parsed and displayed
+     */
     inputFormat: {
       type: String,
       required: false,
       default: 'yyyy-MM-dd',
     },
+    /**
+     * [`date-fns` locale object](https://date-fns.org/v2.16.1/docs/I18n#usage).
+     * Used in string formatting (see default `monthHeadingFormat`)
+     */
     locale: {
       type: Object as PropType<Locale>,
       required: false,
