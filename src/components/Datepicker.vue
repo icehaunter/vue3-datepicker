@@ -46,10 +46,10 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, watchEffect, PropType } from 'vue'
+import { parse, isValid, setYear, lightFormat } from 'date-fns'
 import YearPicker from './YearPicker.vue'
 import MonthPicker from './MonthPicker.vue'
 import DayPicker from './DayPicker.vue'
-import { parse, isValid, setYear, lightFormat } from 'date-fns'
 
 export default defineComponent({
   components: {
