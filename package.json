@@ -11,11 +11,37 @@
     "type": "git",
     "url": "https://github.com/icehaunter/vue3-datepicker.git"
   },
+  "bugs": {
+    "url": "https://github.com/icehaunter/vue3-datepicker/issues"
+  },
+  "private": false,
   "name": "vue3-datepicker",
   "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "A simple Vue 3 datepicker component. Supports disabling of dates, translations. Dependent on date-fns.",
+  "keywords": [
+    "vue",
+    "vue 3",
+    "component",
+    "datepicker",
+    "date-picker",
+    "calendar",
+    "date-fns"
+  ],
+  "main": "dist/vue3-datepicker.cjs.js",
+  "module": "dist/vue3-datepicker.esm.js",
+  "style": "dist/vue3-datepicker.css",
+  "types": "dist/Datepicker.vue.d.ts",
+  "files": [
+    "src/datepicker",
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build:demo": "vite build",
+    "build:component": "rollup -c build/rollup.config.js"
   },
   "devDependencies": {
     "@vue/compiler-sfc": "^3.0.0",
