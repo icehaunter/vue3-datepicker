@@ -15,6 +15,7 @@
       :selected="modelValue"
       :lowerLimit="lowerLimit"
       :upperLimit="upperLimit"
+      :locale="locale"
       @select="selectYear"
     />
     <month-picker
@@ -24,6 +25,8 @@
       @select="selectMonth"
       :lowerLimit="lowerLimit"
       :upperLimit="upperLimit"
+      :headingFormat="monthHeadingFormat"
+      :locale="locale"
       @back="viewShown = 'year'"
     />
     <day-picker
@@ -33,6 +36,8 @@
       :weekStartsOn="weekStartsOn"
       :lowerLimit="lowerLimit"
       :upperLimit="upperLimit"
+      :locale="locale"
+      :weekdayFormat="weekdayFormat"
       @select="selectDay"
       @back="viewShown = 'month'"
     />
@@ -74,6 +79,25 @@ export default defineComponent({
       required: false,
       default: 'day',
     },
+    monthHeadingFormat: {
+      type: String,
+      required: false,
+      default: 'LLLL yyyy',
+    },
+    weekdayFormat: {
+      type: String,
+      required: false,
+      default: 'EE',
+    },
+    inputFormat: {
+      type: String,
+      required: false,
+      default: 'yyyy-MM-dd'
+    },
+    locale: {
+      type: Object as PropType<Locale>,
+      required: false
+    },
     /**
      * Day on which the week should start.
      *
@@ -93,7 +117,7 @@ export default defineComponent({
 
     const input = ref('')
     watchEffect(() => {
-      const parsed = parse(input.value, 'yyyy-MM-dd', new Date())
+      const parsed = parse(input.value, props.inputFormat, new Date())
       if (isValid(parsed)) {
         pageDate.value = parsed
       }
@@ -103,11 +127,10 @@ export default defineComponent({
       () =>
         (input.value =
           props.modelValue && isValid(props.modelValue)
-            ? lightFormat(props.modelValue, 'yyyy-MM-dd')
+            ? lightFormat(props.modelValue, props.inputFormat)
             : '')
     )
 
-    // const setActiveYear = (date: Date) => (pageDate.value = setYear(pageDate.value, date))
     const selectYear = (date: Date) => {
       pageDate.value = date
       viewShown.value = 'month'
@@ -117,7 +140,6 @@ export default defineComponent({
       viewShown.value = 'day'
     }
     const selectDay = (date: Date) => {
-      console.log('DaySelected')
       emit('update:modelValue', date)
 
       viewShown.value = 'none'
