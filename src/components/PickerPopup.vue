@@ -82,9 +82,24 @@
 </template>
 
 <script lang="ts">
+import { isValid } from 'date-fns'
 import { defineComponent, PropType } from 'vue'
 
+type Item = {
+  key: string
+  value: Date
+  display: number | string
+  disabled: boolean
+  selected: boolean
+}
+
 export default defineComponent({
+  emits: {
+    'elementClick': (value: Date) => isValid(value),
+    left: () => true,
+    right: () => true,
+    heading: () => true,
+  },
   props: {
     headingClickable: {
       type: Boolean,
@@ -103,9 +118,9 @@ export default defineComponent({
       default: 7,
     },
     items: {
-      type: Array as PropType<Array<{key: string, value: any, display: any, disabled: boolean, selected: boolean}>>,
-      default: () => []
-    }
+      type: Array as PropType<Item[]>,
+      default: (): Item[] => [],
+    },
   },
 })
 </script>
@@ -163,7 +178,6 @@ button.v3dp__heading__center:hover,
   background-color: var(--heading-hover-color);
 }
 
-
 .v3dp__heading__center {
   flex: 1;
 }
@@ -176,8 +190,6 @@ button.v3dp__heading__center:hover,
 .v3dp__heading__button:disabled .v3dp__heading__icon {
   stroke: var(--elem-disabled-color);
 }
-
-
 
 .v3dp__subheading,
 .v3dp__elements {
