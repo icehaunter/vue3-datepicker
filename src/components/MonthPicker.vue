@@ -14,7 +14,7 @@
   </picker-popup>
 </template>
 
-<script setup="props, { emit }" lang="ts">
+<script lang="ts">
 import { defineComponent, computed, ref, watchEffect, PropType } from 'vue'
 import {
   startOfYear,
@@ -31,70 +31,100 @@ import {
   isSameYear,
   startOfMonth,
   endOfMonth,
+  isValid,
 } from 'date-fns'
 import PickerPopup from './PickerPopup.vue'
 
-export default {
+export default defineComponent({
   components: {
     PickerPopup,
   },
-}
+  emits: {
+    'update:pageDate': (date: Date) => isValid(date),
+    select: (date: Date) => isValid(date),
+    back: () => true,
+  },
+  props: {
+    /**
+     * Currently selected date, needed for highlighting
+     */
+    selected: {
+      type: Date as PropType<Date>,
+      required: false,
+    },
+    pageDate: {
+      type: Date as PropType<Date>,
+      required: true,
+    },
+    format: {
+      type: String,
+      required: false,
+      default: 'MMM'
+    },
+    lowerLimit: {
+      type: Date as PropType<Date>,
+      required: false,
+    },
+    upperLimit: {
+      type: Date as PropType<Date>,
+      required: false,
+    },
+  },
+  setup(props, { emit }) {
+    const from = computed(() => startOfYear(props.pageDate))
+    const to = computed(() => endOfYear(props.pageDate))
 
-declare const props: {
-  /**
-   * Currently selected date, needed for highlighting
-   */
-  selected?: Date
-  pageDate: Date
-  format?: string
-  lowerLimit?: Date
-  upperLimit?: Date
-}
+    const isEnabled = (
+      target: Date,
+      lower: Date | undefined,
+      upper: Date | undefined
+    ): boolean => {
+      if (!lower && !upper) return true
+      if (lower && isBefore(target, startOfMonth(lower))) return false
+      if (upper && isAfter(target, endOfMonth(upper))) return false
+      return true
+    }
 
-declare const emit: (event: string, data?: any) => void
+    const months = computed(() =>
+      eachMonthOfInterval({
+        start: from.value,
+        end: to.value,
+      }).map((value) => ({
+        value,
+        display: format(value, props.format),
+        key: format(value, props.format),
+        selected: props.selected && isSameMonth(props.selected, value),
+        disabled: !isEnabled(value, props.lowerLimit, props.upperLimit),
+      }))
+    )
 
-const from = computed(() => startOfYear(props.pageDate))
-const to = computed(() => endOfYear(props.pageDate))
+    const heading = computed(() => getYear(from.value))
 
-const isEnabled = (target: Date, lower: Date | undefined, upper: Date | undefined) : boolean => {
-  if (!lower && !upper) return true
-  if (lower && isBefore(target, startOfMonth(lower))) return false
-  if (upper && isAfter(target, endOfMonth(upper))) return false
-  return true
-}
+    const leftDisabled = computed(
+      () =>
+        props.lowerLimit &&
+        (isSameYear(props.lowerLimit, props.pageDate) ||
+          isBefore(props.pageDate, props.lowerLimit))
+    )
+    const rightDisabled = computed(
+      () =>
+        props.upperLimit &&
+        (isSameYear(props.upperLimit, props.pageDate) ||
+          isAfter(props.pageDate, props.upperLimit))
+    )
 
+    const previousPage = () =>
+      emit('update:pageDate', subYears(props.pageDate, 1))
+    const nextPage = () => emit('update:pageDate', addYears(props.pageDate, 1))
 
-export const months = computed(() =>
-  eachMonthOfInterval({
-    start: from.value,
-    end: to.value,
-  }).map((value) => ({
-    value,
-    display: format(value, props.format ?? 'MMM'),
-    key: format(value, props.format ?? 'MMM'),
-    selected: props.selected && isSameMonth(props.selected, value),
-    disabled: !isEnabled(value, props.lowerLimit, props.upperLimit)
-  }))
-)
-
-export const heading = computed(() => getYear(from.value))
-
-export const leftDisabled = computed(
-  () =>
-    props.lowerLimit &&
-    (isSameYear(props.lowerLimit, props.pageDate) ||
-      isBefore(props.pageDate, props.lowerLimit))
-)
-export const rightDisabled = computed(
-  () =>
-    props.upperLimit &&
-    (isSameYear(props.upperLimit, props.pageDate) ||
-      isAfter(props.pageDate, props.upperLimit))
-)
-
-
-export const previousPage = () =>
-  emit('update:pageDate', subYears(props.pageDate, 1))
-export const nextPage = () =>
-  emit('update:pageDate', addYears(props.pageDate, 1))
+    return {
+      months,
+      heading,
+      leftDisabled,
+      rightDisabled,
+      previousPage,
+      nextPage,
+    }
+  },
+})
 </script>
