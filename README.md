@@ -6,7 +6,13 @@ All date manipulation and formatting are done via the amazing [`date-fns`](https
 
 ## Installation
 
-(To be done when package is published on NPM)
+Package is available on NPM: https://www.npmjs.com/package/vue3-datepicker
+
+```sh
+npm i vue3-datepicker
+```
+
+The component is packaged mainly for use with bundlers, if you require a browser build - post an issue.
 
 ## Usage
 
