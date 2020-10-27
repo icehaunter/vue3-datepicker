@@ -108,8 +108,12 @@ export default defineComponent({
     }))
 
     const displayedInterval = computed(() => ({
-      start: startOfWeek(monthStart.value),
-      end: endOfWeek(monthEnd.value),
+      start: startOfWeek(monthStart.value, {
+        weekStartsOn: props.weekStartsOn,
+      }),
+      end: endOfWeek(monthEnd.value, {
+        weekStartsOn: props.weekStartsOn,
+      }),
     }))
 
     const weekDays = computed(() => {
