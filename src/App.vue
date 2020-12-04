@@ -22,6 +22,15 @@
   <div>
     <datepicker class="picker" v-model="to" placeholder="to" />
   </div>
+  <div>
+    <datepicker
+      class="picker"
+      v-model="to"
+      :locale="locale"
+      disabled
+      placeholder="disabled"
+    />
+  </div>
 </template>
 
 <script>

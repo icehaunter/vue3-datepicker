@@ -5,9 +5,11 @@
       readonly="readonly"
       v-model="input"
       :placeholder="placeholder"
-      @blur="viewShown = 'none'"
-      @focus="viewShown = startingView"
-      @click="viewShown = startingView"
+      :disabled="disabled"
+      :tabindex="disabled ? -1 : 0"
+      @blur="renderView()"
+      @focus="renderView(startingView)"
+      @click="renderView(startingView)"
     />
     <year-picker
       v-show="viewShown === 'year'"
@@ -146,6 +148,14 @@ export default defineComponent({
       default: 1,
       validator: (value: any) => [0, 1, 2, 3, 4, 5, 6].includes(value),
     },
+    /**
+     * Disables datepicker and prevents it's opening
+     */
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup(props, { emit }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'none')
@@ -167,6 +177,12 @@ export default defineComponent({
             : '')
     )
 
+    const renderView = (view: typeof viewShown.value = 'none') => {
+      if (!props.disabled) viewShown.value = view
+    }
+    watchEffect(() => {
+      if (props.disabled) viewShown.value = 'none'
+    })
     const selectYear = (date: Date) => {
       pageDate.value = date
       viewShown.value = 'month'
@@ -184,6 +200,7 @@ export default defineComponent({
     return {
       input,
       pageDate,
+      renderView,
       selectYear,
       selectMonth,
       selectDay,
