@@ -15,7 +15,6 @@
       :selected="modelValue"
       :lowerLimit="lowerLimit"
       :upperLimit="upperLimit"
-      :locale="locale"
       @select="selectYear"
     />
     <month-picker
@@ -25,6 +24,7 @@
       @select="selectMonth"
       :lowerLimit="lowerLimit"
       :upperLimit="upperLimit"
+      :format="monthListFormat"
       :headingFormat="monthHeadingFormat"
       :locale="locale"
       @back="viewShown = 'year'"
@@ -100,6 +100,14 @@ export default defineComponent({
       type: String,
       required: false,
       default: 'LLLL yyyy',
+    },
+    /**
+     * `date-fns`-type formatting for the month picker view
+     */
+    monthListFormat: {
+      type: String,
+      required: false,
+      default: 'LLL',
     },
     /**
      * `date-fns`-type formatting for a line of weekdays on day view

@@ -34,6 +34,7 @@ import {
   isValid,
 } from 'date-fns'
 import PickerPopup from './PickerPopup.vue'
+import { formatWithOptions } from 'date-fns/fp'
 
 export default defineComponent({
   components: {
@@ -59,7 +60,11 @@ export default defineComponent({
     format: {
       type: String,
       required: false,
-      default: 'MMM',
+      default: 'LLL',
+    },
+    locale: {
+      type: Object as PropType<Locale>,
+      required: false,
     },
     lowerLimit: {
       type: Date as PropType<Date>,
@@ -73,6 +78,12 @@ export default defineComponent({
   setup(props, { emit }) {
     const from = computed(() => startOfYear(props.pageDate))
     const to = computed(() => endOfYear(props.pageDate))
+
+    const format = computed(() =>
+      formatWithOptions({
+        locale: props.locale,
+      })(props.format)
+    )
 
     const isEnabled = (
       target: Date,
@@ -91,8 +102,8 @@ export default defineComponent({
         end: to.value,
       }).map((value) => ({
         value,
-        display: format(value, props.format),
-        key: format(value, props.format),
+        display: format.value(value),
+        key: format.value(value),
         selected: props.selected && isSameMonth(props.selected, value),
         disabled: !isEnabled(value, props.lowerLimit, props.upperLimit),
       }))

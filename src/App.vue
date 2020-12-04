@@ -1,18 +1,31 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
   <div>
-    <datepicker class="picker" v-model="selected" :locale="locale" :upperLimit="to" :lowerLimit="from" />
+    <datepicker
+      class="picker"
+      v-model="selected"
+      :locale="locale"
+      :upperLimit="to"
+      :lowerLimit="from"
+    />
   </div>
   <div>
-    <datepicker class="picker" weekday-format="iiiiii" v-model="from" :locale="locale" placeholder="from" />
+    <datepicker
+      class="picker"
+      weekday-format="iiiiii"
+      month-list-format="LLLL"
+      v-model="from"
+      :locale="locale"
+      placeholder="from"
+    />
   </div>
   <div>
-    <datepicker class="picker" v-model="to" :locale="locale" placeholder="to" />
+    <datepicker class="picker" v-model="to" placeholder="to" />
   </div>
 </template>
 
 <script>
-import Datepicker from './components/Datepicker.vue'
+import Datepicker from './datepicker/Datepicker.vue'
 import { defineComponent } from 'vue'
 import { ru } from 'date-fns/locale'
 
@@ -25,7 +38,7 @@ export default defineComponent({
     return {
       selected: null,
       from: null,
-      to: null
+      to: null,
     }
   },
   computed: {
