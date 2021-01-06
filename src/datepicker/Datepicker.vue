@@ -9,8 +9,8 @@
       :disabled="disabled"
       :tabindex="disabled ? -1 : 0"
       @blur="renderView()"
-      @focus="renderView(startingView)"
-      @click="renderView(startingView)"
+      @focus="renderView(initialView)"
+      @click="renderView(initialView)"
     />
     <year-picker
       v-show="viewShown === 'year'"
@@ -166,6 +166,16 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    /**
+     * If set, lower-level views won't show
+     */
+    minimumView: {
+      type: String as PropType<'year' | 'month' | 'day'>,
+      required: false,
+      default: 'day',
+      validate: (v: unknown) =>
+        typeof v === 'string' && ['day', 'month', 'year'].includes(v),
+    },
   },
   emits: {
     'update:modelValue': (value: Date | null | undefined) =>
@@ -199,17 +209,33 @@ export default defineComponent({
     })
     const selectYear = (date: Date) => {
       pageDate.value = date
-      viewShown.value = 'month'
+
+      if (props.minimumView === 'year') {
+        viewShown.value = 'none'
+        emit('update:modelValue', date)
+      } else {
+        viewShown.value = 'month'
+      }
     }
     const selectMonth = (date: Date) => {
       pageDate.value = date
-      viewShown.value = 'day'
+
+      if (props.minimumView === 'month') {
+        viewShown.value = 'none'
+        emit('update:modelValue', date)
+      } else {
+        viewShown.value = 'day'
+      }
     }
     const selectDay = (date: Date) => {
       emit('update:modelValue', date)
 
       viewShown.value = 'none'
     }
+
+    const initialView = computed(() => {
+      return props.startingView === props.minimumView ? props.startingView : props.minimumView
+    })
 
     return {
       input,
@@ -219,6 +245,7 @@ export default defineComponent({
       selectMonth,
       selectDay,
       viewShown,
+      initialView,
       log: (e: any) => console.log(e),
     }
   },
