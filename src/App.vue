@@ -31,6 +31,24 @@
       placeholder="disabled"
     />
   </div>
+  <div>
+    <datepicker
+      class="picker"
+      v-model="yearSelected"
+      :locale="locale"
+      minimum-view="year"
+      placeholder="selectYear"
+    />
+  </div>
+  <div>
+    <datepicker
+      class="picker"
+      v-model="monthSelected"
+      :locale="locale"
+      minimum-view="month"
+      placeholder="selectMonth"
+    />
+  </div>
 </template>
 
 <script>
@@ -48,6 +66,8 @@ export default defineComponent({
       selected: null,
       from: null,
       to: null,
+      yearSelected: null,
+      monthSelected: null,
     }
   },
   computed: {
