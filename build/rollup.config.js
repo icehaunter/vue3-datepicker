@@ -1,6 +1,6 @@
 import vue from 'rollup-plugin-vue'
 import typescript from 'rollup-plugin-typescript2'
-import css from 'rollup-plugin-postcss'
+import postcss from 'rollup-plugin-postcss'
 import path from 'path'
 
 export default [
@@ -11,9 +11,9 @@ export default [
     },
     plugins: [
       typescript(),
-      vue({ css: false }),
-      css({
-        extract: path.resolve('dist', 'vue3-datepicker.css'),
+      vue(),
+      postcss({
+        plugins: []
       }),
     ],
   },
@@ -26,10 +26,12 @@ export default [
     plugins: [
       typescript(),
       vue({ css: false }),
-      css({
-        extract: false,
-        inject: false
-      })
+      postcss({
+        extract: path.resolve('dist', 'vue3-datepicker.css'),  
+        inject: false,
+        plugins: [],
+      }),
+      
     ],
   },
 ].map((v) => ({

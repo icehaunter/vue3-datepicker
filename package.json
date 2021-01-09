@@ -16,7 +16,7 @@
   },
   "private": false,
   "name": "vue3-datepicker",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -47,6 +47,7 @@
     "@vitejs/plugin-vue": "^1.0.4",
     "@vue/compiler-sfc": "^3.0.5",
     "eslint": "^7.17.0",
+    "postcss": "^8.2.4",
     "prettier": "^2.2.1",
     "rollup": "^2.36.1",
     "rollup-plugin-postcss": "^4.0.0",
