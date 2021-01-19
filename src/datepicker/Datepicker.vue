@@ -38,6 +38,7 @@
       :weekStartsOn="weekStartsOn"
       :lowerLimit="lowerLimit"
       :upperLimit="upperLimit"
+      :disabledDates="disabledDates"
       :locale="locale"
       :weekdayFormat="weekdayFormat"
       @select="selectDay"
@@ -69,6 +70,13 @@ export default defineComponent({
      */
     modelValue: {
       type: Date as PropType<Date>,
+      required: false,
+    },
+    /**
+     * Dates not available for picking
+     */
+    disabledDates: {
+      type: Object as PropType<{ dates: Date[] | undefined }>,
       required: false,
     },
     /**
