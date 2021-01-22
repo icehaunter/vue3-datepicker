@@ -22,6 +22,13 @@ Upper limit (not inclusive) for available dates for picking. All dates above tha
 
 Lower limit (not inclusive) for available dates for picking. All dates below that limit will not be selectable.
 
+### `disabledDates`
+
+- Type: `{ dates: Date[] }`
+- Required: no
+
+All dates listed in the dates array will not be selectable.
+
 ### `startingView`
 
 - Type: `'day' | 'month' | 'year'`
