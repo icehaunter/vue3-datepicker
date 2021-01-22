@@ -36,7 +36,7 @@
 <script>
 import Datepicker from './datepicker/Datepicker.vue'
 import { defineComponent } from 'vue'
-import { ru } from 'date-fns/locale'
+import { enUS } from 'date-fns/locale'
 
 export default defineComponent({
   name: 'App',
@@ -51,7 +51,7 @@ export default defineComponent({
     }
   },
   computed: {
-    locale: () => ru,
+    locale: () => enUS,
   },
   watch: {
     selected: (value) => console.log(value),
