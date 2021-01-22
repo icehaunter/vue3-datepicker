@@ -60,6 +60,7 @@ More in-depth documentation of the props, as well as examples, can be found in [
 |---|---|---|---|
 |`upperLimit`|`Date`||Upper limit for available dates for picking|
 |`lowerLimit`|`Date`||Lower limit for available dates for picking|
+|`disabledDates`|`{ dates: Date[] }`||Dates not available for picking|
 |`startingView`| `'day' | 'month' | 'year'` | `'day'` |View on which the date picker should open. Can be either `year`, `month`, or `day` |
 | `monthHeadingFormat` | `String` | `LLLL yyyy` | `date-fns`-type formatting for a month view heading
 | `weekdayFormat` | `String` | `EE` | `date-fns`-type formatting for a line of weekdays on day view

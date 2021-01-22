@@ -11,6 +11,10 @@ const example2 = ref(new Date())
 const example2_from = ref(add(new Date(), { days: -7 }))
 const example2_to = ref(add(new Date(), { days: 7 }))
 
+// Disabled dates example
+const pickedDate = ref(new Date())
+const disabledDate = ref(add(new Date(), { days: 1 }))
+
 // Ex 3
 const example3 = ref(new Date())
 const startingView = ref('day')
@@ -76,6 +80,37 @@ Result:
       v-model="example2"
       :upper-limit="example2_to"
       :lower-limit="example2_from"
+    />
+  </template>
+  ```
+</details>
+
+## Disabled dates
+
+Settings: 
+
+- Disabled date: <datepicker v-model="disabledDate" />
+
+Result:
+
+<datepicker v-model="pickedDate" :disabledDates="{ dates: [disabledDate] }" />
+
+<details>
+  <summary>Code for this example</summary>
+  
+  ```vue
+  <script setup>
+  import Datepicker from '../src/datepicker/Datepicker.vue'
+  import { ref } from 'vue'
+  import { add } from 'date-fns'
+  const pickedDate = ref(new Date())
+  const disabledDate = ref(add(new Date(), { days: 1 }))
+  </script>
+
+  <template>
+    <datepicker
+      v-model="pickedDate"
+      :disabledDates="{ dates: [disabledDate] }"
     />
   </template>
   ```
