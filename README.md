@@ -44,3 +44,7 @@ Main interaction to date selection is done via `v-model` with `Date` as expected
 | `inputFormat` | `String` | `yyyy-MM-dd` | `date-fns`-type format in which the string in the input should be both parsed and displayed |
 | `locale` | [`Locale`](https://date-fns.org/v2.16.1/docs/I18n#usage) | `date-fns/locale/en` | [`date-fns` locale object](https://date-fns.org/v2.16.1/docs/I18n#usage). Used in string formatting (see default `monthHeadingFormat`)
 | `weekStartsOn` | `Number` | 1 | Day on which the week should start. Number from 0 to 6, where 0 is Sunday and 6 is Saturday. Week starts with a Monday (1) by default |
+
+## Compatibility
+
+Package is transpiled and should be usable for everyone with ES6 and above, but the styling of the datepicker itself uses CSS Grid and CSS variables.
