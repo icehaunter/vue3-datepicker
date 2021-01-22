@@ -1,5 +1,7 @@
 # Vue 3 Datepicker
 
+Documentation: https://icehaunter.github.io/vue3-datepicker/
+
 This is a basic (at least for now) reimplementation of https://github.com/icehaunter/vuejs-datepicker in Vue 3 and with greatly cleaned up code.
 
 All date manipulation and formatting are done via the amazing [`date-fns`](https://date-fns.org/) library, so it's a direct dependency of this picker.
@@ -15,6 +17,8 @@ npm i vue3-datepicker
 The component is packaged mainly for use with bundlers, if you require a browser build - post an issue.
 
 ## Usage
+
+For more examples see https://icehaunter.github.io/vue3-datepicker/examples.html
 
 ```vue
 <template>
@@ -33,6 +37,8 @@ Attribute fallthrough is enabled, so any attribute you apply to the component wi
 All props which accept formatting strings for dates use [`date-fns` formatting function](https://date-fns.org/docs/format) under the hood, so see that function's documentation for patterns.
 
 Main interaction to date selection is done via `v-model` with `Date` as expected type of the value passed.
+
+Full props documentation is available at https://icehaunter.github.io/vue3-datepicker/config.html#props
 
 |ID|Type|Default|Description
 |---|---|---|---|
