@@ -136,7 +136,7 @@ export default defineComponent({
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
   padding: 8px 0 1em;
-  color: inherit;
+  color: var(--text-color);
 }
 
 .v3dp__popout * {
