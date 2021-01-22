@@ -92,7 +92,7 @@ export default defineComponent({
       required: false,
     },
     disabledDates: {
-      type: Object as PropType<{ dates: Date[] | undefined }>,
+      type: Object as PropType<{ dates?: Date[] }>,
       required: false,
     },
   },
@@ -135,9 +135,9 @@ export default defineComponent({
 
     const isEnabled = (
       target: Date,
-      lower: Date | undefined,
-      upper: Date | undefined,
-      disabledDates: { dates: Date[] | undefined } | undefined
+      lower?: Date,
+      upper?: Date,
+      disabledDates?: { dates?: Date[] }
     ): boolean => {
       if (disabledDates?.dates?.some(date => isSameDay(target, date))) return false
       if (!lower && !upper) return true
