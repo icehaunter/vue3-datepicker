@@ -5,7 +5,7 @@ const picked = ref(new Date())
 
 </script>
 
-# Vue 3 Datepicker
+# Introduction
 
 This is a reimplementation of [vuejs-datepicker](https://github.com/icehaunter/vuejs-datepicker) in Vue 3 and with greatly cleaned up code.
 
