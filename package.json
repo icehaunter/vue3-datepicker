@@ -33,7 +33,7 @@
   "main": "dist/vue3-datepicker.cjs.js",
   "module": "dist/vue3-datepicker.esm.js",
   "style": "dist/vue3-datepicker.css",
-  "types": "dist/Datepicker.vue.d.ts",
+  "types": "dist/src/datepicker/Datepicker.vue.d.ts",
   "files": [
     "src/datepicker",
     "dist"
