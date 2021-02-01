@@ -11,6 +11,7 @@
       @focus="renderView(startingView)"
       @click="renderView(startingView)"
     />
+    <i v-show="clearable" class="clearable" @click="clearInput()">&times;</i>
     <year-picker
       v-show="viewShown === 'year'"
       v-model:pageDate="pageDate"
@@ -164,6 +165,19 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    /**
+     * Clears selected date
+     */
+    clearable: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
+  methods: {
+    clearInput() {
+      this.input = null;
+    }
   },
   setup(props, { emit }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'none')
@@ -204,7 +218,6 @@ export default defineComponent({
 
       viewShown.value = 'none'
     }
-
     return {
       input,
       pageDate,
@@ -247,5 +260,11 @@ export default defineComponent({
   --divider-color: var(--vdp-divider-color, var(--elem-disabled-color));
 
   position: relative;
+}
+
+.clearable {
+  position: relative;
+  left: -15px;
+  cursor: pointer;
 }
 </style>

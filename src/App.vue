@@ -7,6 +7,7 @@
       :locale="locale"
       :upperLimit="to"
       :lowerLimit="from"
+      :clearable="true"
     />
   </div>
   <div>

@@ -27,6 +27,7 @@ For more examples see https://icehaunter.github.io/vue3-datepicker/examples.html
     :locale="locale"
     :upperLimit="to"
     :lowerLimit="from"
+    :clearable="true"
   />
 </template>
 ```
@@ -51,6 +52,7 @@ Full props documentation is available at https://icehaunter.github.io/vue3-datep
 | `inputFormat` | `String` | `yyyy-MM-dd` | `date-fns`-type format in which the string in the input should be both parsed and displayed |
 | `locale` | [`Locale`](https://date-fns.org/v2.16.1/docs/I18n#usage) | `date-fns/locale/en` | [`date-fns` locale object](https://date-fns.org/v2.16.1/docs/I18n#usage). Used in string formatting (see default `monthHeadingFormat`)
 | `weekStartsOn` | `Number` | 1 | Day on which the week should start. Number from 0 to 6, where 0 is Sunday and 6 is Saturday. Week starts with a Monday (1) by default |
+| `clearable` | `Boolean` | 0 | Clears the selected date and sets the value to null |
 
 ## Compatibility
 
