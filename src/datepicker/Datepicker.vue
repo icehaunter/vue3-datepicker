@@ -4,6 +4,7 @@
       type="text"
       readonly="readonly"
       v-model="input"
+      v-bind="$attrs"
       :placeholder="placeholder"
       :disabled="disabled"
       :tabindex="disabled ? -1 : 0"
@@ -60,6 +61,7 @@ export default defineComponent({
     MonthPicker,
     DayPicker,
   },
+  inheritAttrs: false,
   props: {
     placeholder: {
       type: String,
@@ -164,6 +166,10 @@ export default defineComponent({
       required: false,
       default: false,
     },
+  },
+  emits: {
+    'update:modelValue': (value: Date | null | undefined) =>
+      value === null || value === undefined || isValid(value),
   },
   setup(props, { emit }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'none')
