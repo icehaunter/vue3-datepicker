@@ -16,7 +16,7 @@
   },
   "private": false,
   "name": "vue3-datepicker",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "publishConfig": {
     "access": "public"
   },
@@ -33,7 +33,7 @@
   "main": "dist/vue3-datepicker.cjs.js",
   "module": "dist/vue3-datepicker.esm.js",
   "style": "dist/vue3-datepicker.css",
-  "types": "dist/src/datepicker/Datepicker.vue.d.ts",
+  "types": "dist/types/Datepicker.vue.d.ts",
   "files": [
     "src/datepicker",
     "dist"

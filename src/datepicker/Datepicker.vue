@@ -167,7 +167,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'none')
-    const pageDate = ref(new Date())
+    const pageDate = ref<Date>(new Date())
 
     const input = ref('')
     watchEffect(() => {
