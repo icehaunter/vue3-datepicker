@@ -16,7 +16,7 @@
   },
   "private": false,
   "name": "vue3-datepicker",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "publishConfig": {
     "access": "public"
   },
