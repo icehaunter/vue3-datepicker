@@ -1,17 +1,21 @@
 <template>
   <div class="v3dp__datepicker">
-    <input
-      type="text"
-      readonly="readonly"
-      v-model="input"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :tabindex="disabled ? -1 : 0"
-      @blur="renderView()"
-      @focus="renderView(startingView)"
-      @click="renderView(startingView)"
-    />
-    <i v-show="clearable" class="clearable" @click="clearInput()">&times;</i>
+    <div class="v3dp__input_wrapper">
+      <input
+          type="text"
+          readonly="readonly"
+          v-model="input"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          :tabindex="disabled ? -1 : 0"
+          @blur="renderView()"
+          @focus="renderView(startingView)"
+          @click="renderView(startingView)"
+      />
+      <slot>
+        <i class="v3dp__clearable" v-show="clearable && modelValue" @click="clearModelValue()">&times;</i>
+      </slot>
+    </div>
     <year-picker
       v-show="viewShown === 'year'"
       v-model:pageDate="pageDate"
@@ -174,11 +178,6 @@ export default defineComponent({
       default: false
     }
   },
-  methods: {
-    clearInput() {
-      this.input = null;
-    }
-  },
   setup(props, { emit }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'none')
     const pageDate = ref(new Date())
@@ -218,6 +217,11 @@ export default defineComponent({
 
       viewShown.value = 'none'
     }
+    const clearModelValue = () => {
+      if (props.clearable) {
+        emit('update:modelValue', null)
+      }
+    }
     return {
       input,
       pageDate,
@@ -226,6 +230,7 @@ export default defineComponent({
       selectMonth,
       selectDay,
       viewShown,
+      clearModelValue,
       log: (e: any) => console.log(e),
     }
   },
@@ -262,7 +267,7 @@ export default defineComponent({
   position: relative;
 }
 
-.clearable {
+.v3dp__clearable {
   position: relative;
   left: -15px;
   cursor: pointer;
