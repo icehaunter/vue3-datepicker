@@ -67,7 +67,7 @@ More in-depth documentation of the props, as well as examples, can be found in [
 | `inputFormat` | `String` | `yyyy-MM-dd` | `date-fns`-type format in which the string in the input should be both parsed and displayed |
 | `locale` | [`Locale`](https://date-fns.org/v2.16.1/docs/I18n#usage) | `date-fns/locale/en` | [`date-fns` locale object](https://date-fns.org/v2.16.1/docs/I18n#usage). Used in string formatting (see default `monthHeadingFormat`)
 | `weekStartsOn` | `Number` | 1 | Day on which the week should start. Number from 0 to 6, where 0 is Sunday and 6 is Saturday. Week starts with a Monday (1) by default |
-| `clearable` | `Boolean` | 0 | Clears the selected date and sets the value to null |
+| `clearable` | `Boolean` | `false` | Allows clearing the selected date and setting the value to `null` |
 
 ## Styling
 

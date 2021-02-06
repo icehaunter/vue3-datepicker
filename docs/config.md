@@ -74,9 +74,9 @@ Day on which the week should start. Number from 0 to 6, where 0 is Sunday and 6 
 ### `clearable`
 
 - Type: `Boolean`
-- Default: `0`
+- Default: `false`
 
-Clears the selected date and sets the value to null.
+Allows clearing the selected date and setting the value to `null`
 
 ## Styling
 
