@@ -55,6 +55,8 @@ import YearPicker from './YearPicker.vue'
 import MonthPicker from './MonthPicker.vue'
 import DayPicker from './DayPicker.vue'
 
+const TIME_RESOLUTIONS = ['day', 'month', 'year']
+
 export default defineComponent({
   components: {
     YearPicker,
@@ -103,7 +105,7 @@ export default defineComponent({
       required: false,
       default: 'day',
       validate: (v: unknown) =>
-        typeof v === 'string' && ['day', 'month', 'year'].includes(v),
+        typeof v === 'string' && TIME_RESOLUTIONS.includes(v),
     },
     /**
      * `date-fns`-type formatting for a month view heading
@@ -174,8 +176,8 @@ export default defineComponent({
       required: false,
       default: 'day',
       validate: (v: unknown) =>
-        typeof v === 'string' && ['day', 'month', 'year'].includes(v),
-    },
+        typeof v === 'string' && TIME_RESOLUTIONS.includes(v),
+    }
   },
   emits: {
     'update:modelValue': (value: Date | null | undefined) =>
@@ -234,7 +236,12 @@ export default defineComponent({
     }
 
     const initialView = computed(() => {
-      return props.startingView === props.minimumView ? props.startingView : props.minimumView
+      const startingViewOrder = TIME_RESOLUTIONS.indexOf(props.startingView)
+      const minimumViewOrder = TIME_RESOLUTIONS.indexOf(props.minimumView)
+
+      return startingViewOrder < minimumViewOrder
+        ? props.minimumView
+        : props.startingView
     })
 
     return {
