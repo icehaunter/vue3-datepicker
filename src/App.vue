@@ -46,6 +46,7 @@
       v-model="monthSelected"
       :locale="locale"
       minimum-view="month"
+      starting-view="year"
       placeholder="selectMonth"
     />
   </div>
