@@ -50,6 +50,15 @@
       placeholder="selectMonth"
     />
   </div>
+  <div>
+    <datepicker
+      class="picker"
+      v-model="disableWeekendsSelected"
+      :local="locale"
+      placeholder="Weekends Disabled"
+      :disableWeekends="weekendsDisabled"
+    />
+  </div>
 </template>
 
 <script>
@@ -69,6 +78,8 @@ export default defineComponent({
       to: null,
       yearSelected: null,
       monthSelected: null,
+      weekendsDisabled: true,
+      disableWeekendsSelected: null
     }
   },
   computed: {

@@ -40,6 +40,7 @@
       :lowerLimit="lowerLimit"
       :upperLimit="upperLimit"
       :disabledDates="disabledDates"
+      :disableWeekends="disableWeekends"
       :locale="locale"
       :weekdayFormat="weekdayFormat"
       @select="selectDay"
@@ -82,6 +83,14 @@ export default defineComponent({
     disabledDates: {
       type: Object as PropType<{ dates?: Date[] }>,
       required: false,
+    },
+    /**
+     * Disable weekend dates
+     */
+    disableWeekends: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     /**
      * Upper limit for available dates for picking

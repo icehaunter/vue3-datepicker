@@ -35,6 +35,7 @@ import {
   endOfDay,
   startOfDay,
   isValid,
+  isWeekend
 } from 'date-fns'
 import { formatWithOptions } from 'date-fns/fp'
 import PickerPopup from './PickerPopup.vue'
@@ -95,6 +96,11 @@ export default defineComponent({
       type: Object as PropType<{ dates?: Date[] }>,
       required: false,
     },
+    disableWeekends: {
+      type: Boolean,
+      required: false,
+      default: false,
+    }
   },
   setup(props, { emit }) {
     const format = computed(() =>
@@ -137,8 +143,10 @@ export default defineComponent({
       target: Date,
       lower?: Date,
       upper?: Date,
-      disabledDates?: { dates?: Date[] }
+      disabledDates?: { dates?: Date[] },
+      disableWeekends?: Boolean
     ): boolean => {
+      if (disableWeekends) return !isWeekend(target)
       if (disabledDates?.dates?.some(date => isSameDay(target, date))) return false
       if (!lower && !upper) return true
       if (lower && isBefore(target, startOfDay(lower))) return false
@@ -154,7 +162,7 @@ export default defineComponent({
         selected: props.selected && isSameDay(props.selected, value),
         disabled:
           !isWithinInterval(value, currentMonth.value) ||
-          !isEnabled(value, props.lowerLimit, props.upperLimit, props.disabledDates),
+          !isEnabled(value, props.lowerLimit, props.upperLimit, props.disabledDates, props.disableWeekends),
         key: format.value('yyyy-MM-dd', value),
       }))
     })
