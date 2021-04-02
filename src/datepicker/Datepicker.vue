@@ -50,7 +50,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, watchEffect, PropType } from 'vue'
-import { parse, isValid, setYear, lightFormat } from 'date-fns'
+import { parse, isValid, setYear, format } from 'date-fns'
 import YearPicker from './YearPicker.vue'
 import MonthPicker from './MonthPicker.vue'
 import DayPicker from './DayPicker.vue'
@@ -199,7 +199,7 @@ export default defineComponent({
       () =>
         (input.value =
           props.modelValue && isValid(props.modelValue)
-            ? lightFormat(props.modelValue, props.inputFormat)
+            ? format(props.modelValue, props.inputFormat, {locale: props.locale})
             : '')
     )
 
