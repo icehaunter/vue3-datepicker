@@ -58,3 +58,24 @@ Full props documentation is available at https://icehaunter.github.io/vue3-datep
 ## Compatibility
 
 Package is transpiled and should be usable for everyone with ES6 and above, but the styling of the datepicker itself uses CSS Grid and CSS variables.
+
+
+## Example
+```
+<template>
+  <datepicker v-model="picked" />
+</template>
+
+
+<script>
+import Datepicker from '../src/datepicker/Datepicker.vue'
+components: {
+  Datepicker
+},
+data(): {
+  return {
+    picked: new Date();
+  }
+}
+</script>
+```
