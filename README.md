@@ -61,7 +61,7 @@ Package is transpiled and should be usable for everyone with ES6 and above, but 
 
 
 ## Example
-```
+```vue
 <template>
   <datepicker v-model="picked" />
 </template>
