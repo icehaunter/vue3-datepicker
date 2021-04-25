@@ -8,7 +8,11 @@
       :upperLimit="to"
       :lowerLimit="from"
       :clearable="true"
-    />
+    >
+      <template v-slot:clear="{ onClear }">
+        <button @click="onClear">x</button>
+      </template>
+    </datepicker>
   </div>
   <div>
     <datepicker

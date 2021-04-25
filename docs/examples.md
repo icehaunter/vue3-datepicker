@@ -154,3 +154,29 @@ Result:
   </template>
   ```
 </details>
+
+:::tip
+We can customize clearable view with `slot` for example:
+:::
+<details>
+  <summary>Code for this example</summary>
+
+  ```vue
+  <script setup>
+  import Datepicker from '../src/datepicker/Datepicker.vue'
+  import { ref } from 'vue'
+  const pickedDate = ref(new Date())
+  </script>
+
+  <template>
+    <datepicker
+      v-model="pickedDate"
+      :clearable="{ true }"
+    >
+      <template v-slot:clear="{ onClear }">
+        <button @click="onClear">x</button>
+      </template>
+    </datepicker>
+  </template>
+  ```
+</details>

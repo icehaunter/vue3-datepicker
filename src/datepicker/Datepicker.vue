@@ -12,9 +12,11 @@
           @focus="renderView(startingView)"
           @click="renderView(startingView)"
       />
-      <slot>
-        <i class="v3dp__clearable" v-show="clearable && modelValue" @click="clearModelValue()">&times;</i>
-      </slot>
+      <div class="v3dp__clearable" v-show="clearable && modelValue">
+        <slot name="clear" :onClear="clearModelValue">
+          <i @click="clearModelValue()">x</i>
+        </slot>
+      </div>
     </div>
     <year-picker
       v-show="viewShown === 'year'"
@@ -268,6 +270,7 @@ export default defineComponent({
 }
 
 .v3dp__clearable {
+  display: inline;
   position: relative;
   left: -15px;
   cursor: pointer;
