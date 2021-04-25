@@ -73,6 +73,8 @@ Day on which the week should start. Number from 0 to 6, where 0 is Sunday and 6 
 
 ## Styling
 
+The input itself can be styled via passing classes to it. [Attribute fallthrough](https://v3.vuejs.org/guide/component-attrs.html#disabling-attribute-inheritance) is enabled. Keep in mind that input itself is not a top-level element, as it is contained within the top-level `div`.
+
 :::warning
 Heavy restyling via variables has not been tested, as I am mostly using this component as-is. If you find any issues while adjusting the colors (e.g. some colors don't change or a setting is missing) please [file an issue on GitHub](https://github.com/icehaunter/vue3-datepicker/issues).
 :::

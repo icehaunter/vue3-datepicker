@@ -13,7 +13,7 @@ All date manipulation and formatting are done via the amazing [`date-fns`](https
 
 ## Example
 
-Datepicker comes with styling, but input itself does not
+Datepicker comes with styling, but input itself does not. Attributes fall through to the `input` element, so you can use classes and styles as you would on any input.
 
 <datepicker v-model="picked" />
 
