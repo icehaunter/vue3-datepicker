@@ -47,6 +47,7 @@ Full props documentation is available at https://icehaunter.github.io/vue3-datep
 |`lowerLimit`|`Date`||Lower limit for available dates for picking|
 |`disabledDates`|`{ dates: Date[] }`||Dates not available for picking|
 |`startingView`| `'day' \| 'month' \| 'year'` | `'day'` |View on which the date picker should open. Can be either `year`, `month`, or `day` |
+|`minimumView`| `'day' \| 'month' \| 'year'` | `'day'` |If set, lower-level views won't show |
 | `monthHeadingFormat` | `String` | `LLLL yyyy` | `date-fns`-type formatting for a month view heading
 | `weekdayFormat` | `String` | `EE` | `date-fns`-type formatting for a line of weekdays on day view
 | `inputFormat` | `String` | `yyyy-MM-dd` | `date-fns`-type format in which the string in the input should be both parsed and displayed |

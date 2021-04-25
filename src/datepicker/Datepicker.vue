@@ -2,15 +2,17 @@
   <div class="v3dp__datepicker">
     <div class="v3dp__input_wrapper">
       <input
-          type="text"
-          readonly="readonly"
-          v-model="input"
-          :placeholder="placeholder"
-          :disabled="disabled"
-          :tabindex="disabled ? -1 : 0"
-          @blur="renderView()"
-          @focus="renderView(startingView)"
-          @click="renderView(startingView)"
+        type="text"
+        readonly="readonly"
+        v-model="input"
+        v-bind="$attrs"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :tabindex="disabled ? -1 : 0"
+        @blur="renderView()"
+        @focus="renderView(initialView)"
+        @click="renderView(initialView)"
+        :clearable="true"
       />
       <div class="v3dp__clearable" v-show="clearable && modelValue">
         <slot name="clear" :onClear="clearModelValue">
@@ -61,6 +63,8 @@ import YearPicker from './YearPicker.vue'
 import MonthPicker from './MonthPicker.vue'
 import DayPicker from './DayPicker.vue'
 
+const TIME_RESOLUTIONS = ['day', 'month', 'year']
+
 export default defineComponent({
   components: {
     YearPicker,
@@ -109,7 +113,7 @@ export default defineComponent({
       required: false,
       default: 'day',
       validate: (v: unknown) =>
-        typeof v === 'string' && ['day', 'month', 'year'].includes(v),
+        typeof v === 'string' && TIME_RESOLUTIONS.includes(v),
     },
     /**
      * `date-fns`-type formatting for a month view heading
@@ -179,6 +183,16 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: false
+    },
+    /**
+     * If set, lower-level views won't show
+     */
+    minimumView: {
+      type: String as PropType<'year' | 'month' | 'day'>,
+      required: false,
+      default: 'day',
+      validate: (v: unknown) =>
+        typeof v === 'string' && TIME_RESOLUTIONS.includes(v),
     }
   },
   emits: {
@@ -213,11 +227,23 @@ export default defineComponent({
     })
     const selectYear = (date: Date) => {
       pageDate.value = date
-      viewShown.value = 'month'
+
+      if (props.minimumView === 'year') {
+        viewShown.value = 'none'
+        emit('update:modelValue', date)
+      } else {
+        viewShown.value = 'month'
+      }
     }
     const selectMonth = (date: Date) => {
       pageDate.value = date
-      viewShown.value = 'day'
+
+      if (props.minimumView === 'month') {
+        viewShown.value = 'none'
+        emit('update:modelValue', date)
+      } else {
+        viewShown.value = 'day'
+      }
     }
     const selectDay = (date: Date) => {
       emit('update:modelValue', date)
@@ -229,6 +255,16 @@ export default defineComponent({
         emit('update:modelValue', null)
       }
     }
+
+    const initialView = computed(() => {
+      const startingViewOrder = TIME_RESOLUTIONS.indexOf(props.startingView)
+      const minimumViewOrder = TIME_RESOLUTIONS.indexOf(props.minimumView)
+
+      return startingViewOrder < minimumViewOrder
+        ? props.minimumView
+        : props.startingView
+    })
+
     return {
       input,
       pageDate,
@@ -238,6 +274,7 @@ export default defineComponent({
       selectDay,
       viewShown,
       clearModelValue,
+      initialView,
       log: (e: any) => console.log(e),
     }
   },
