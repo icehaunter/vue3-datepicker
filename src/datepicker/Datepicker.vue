@@ -67,6 +67,7 @@ export default defineComponent({
     MonthPicker,
     DayPicker,
   },
+  inheritAttrs: false,
   props: {
     placeholder: {
       type: String,
@@ -180,9 +181,13 @@ export default defineComponent({
       default: false
     }
   },
+  emits: {
+    'update:modelValue': (value: Date | null | undefined) =>
+      value === null || value === undefined || isValid(value),
+  },
   setup(props, { emit }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'none')
-    const pageDate = ref(new Date())
+    const pageDate = ref<Date>(new Date())
 
     const input = ref('')
     watchEffect(() => {
