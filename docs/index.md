@@ -54,7 +54,7 @@ All props which accept formatting strings for dates use [`date-fns` formatting f
 
 Main interaction to date selection is done via `v-model` with `Date` as expected type of the value passed.
 
-More in-depth documentation of the props, as well as examples, can be found in [Configuration](/config)
+More in-depth documentation of the props, as well as examples, can be found in [Configuration](/vue3-datepicker/config)
 
 |ID|Type|Default|Description
 |---|---|---|---|
@@ -72,4 +72,4 @@ More in-depth documentation of the props, as well as examples, can be found in [
 
 ## Styling
 
-Styling is done via CSS variables, which control colors used in the popup. All variables, as well as styling example and playground can be found in [Configuration section](/config#styling-example-and-playground)
+Styling is done via CSS variables, which control colors used in the popup. All variables, as well as styling example and playground can be found in [Configuration section](/vue3-datepicker/config.html#styling-example-and-playground)
