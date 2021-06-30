@@ -2,12 +2,14 @@
   <div class="v3dp__datepicker">
     <input
       type="text"
-      readonly="readonly"
+      ref="inputRef"
+      :readonly="!typeable"
       v-model="input"
       v-bind="$attrs"
       :placeholder="placeholder"
       :disabled="disabled"
       :tabindex="disabled ? -1 : 0"
+      @keyup="keyUp"
       @blur="renderView()"
       @focus="renderView(initialView)"
       @click="renderView(initialView)"
@@ -169,6 +171,14 @@ export default defineComponent({
       default: false,
     },
     /**
+     * Allows user to input date manually
+     */
+    typeable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    /**
      * If set, lower-level views won't show
      */
     minimumView: {
@@ -186,6 +196,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'none')
     const pageDate = ref<Date>(new Date())
+    const inputRef = ref(null as HTMLInputElement | null)
 
     const input = ref('')
     watchEffect(() => {
@@ -235,6 +246,24 @@ export default defineComponent({
       viewShown.value = 'none'
     }
 
+    const keyUp = (event: KeyboardEvent) => {
+      const code = (event.keyCode ? event.keyCode : event.which)
+      // close calendar if escape or enter are pressed
+      if ([
+        27, // escape
+        13 // enter
+      ].includes(code)) {
+        inputRef.value!.blur()
+      }
+      if (props.typeable) {
+        const parsedDate = parse(inputRef.value!.value, props.inputFormat, new Date(), { locale: props.locale })
+        if (isValid(parsedDate)) {
+          input.value = inputRef.value!.value
+          emit('update:modelValue', parsedDate)
+        }
+      }
+    }
+
     const initialView = computed(() => {
       const startingViewOrder = TIME_RESOLUTIONS.indexOf(props.startingView)
       const minimumViewOrder = TIME_RESOLUTIONS.indexOf(props.minimumView)
@@ -246,11 +275,13 @@ export default defineComponent({
 
     return {
       input,
+      inputRef,
       pageDate,
       renderView,
       selectYear,
       selectMonth,
       selectDay,
+      keyUp,
       viewShown,
       initialView,
       log: (e: any) => console.log(e),
