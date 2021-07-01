@@ -78,6 +78,20 @@ Day on which the week should start. Number from 0 to 6, where 0 is Sunday and 6 
 
 Allows clearing the selected date and setting the value to `null`
 
+### `disabled`
+
+- Type: `Boolean`
+- Default: `false`
+
+Disables datepicker and prevents it's opening
+
+### `typeable`
+
+- Type: `Boolean`
+- Default: `false`
+
+Allows user to input date manually
+
 ## Styling
 
 The input itself can be styled via passing classes to it. [Attribute fallthrough](https://v3.vuejs.org/guide/component-attrs.html#disabling-attribute-inheritance) is enabled. Keep in mind that input itself is not a top-level element, as it is contained within the top-level `div`.

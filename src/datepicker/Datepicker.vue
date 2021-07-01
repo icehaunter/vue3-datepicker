@@ -3,16 +3,17 @@
     <div class="v3dp__input_wrapper">
       <input
         type="text"
-        readonly="readonly"
+        ref="inputRef"
+        :readonly="!typeable"
         v-model="input"
         v-bind="$attrs"
         :placeholder="placeholder"
         :disabled="disabled"
         :tabindex="disabled ? -1 : 0"
+        @keyup="keyUp"
         @blur="renderView()"
         @focus="renderView(initialView)"
         @click="renderView(initialView)"
-        :clearable="true"
       />
       <div class="v3dp__clearable" v-show="clearable && modelValue">
         <slot name="clear" :onClear="clearModelValue">
@@ -58,7 +59,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, watchEffect, PropType } from 'vue'
-import { parse, isValid, setYear, lightFormat } from 'date-fns'
+import { parse, isValid, setYear, format } from 'date-fns'
 import YearPicker from './YearPicker.vue'
 import MonthPicker from './MonthPicker.vue'
 import DayPicker from './DayPicker.vue'
@@ -182,7 +183,15 @@ export default defineComponent({
     clearable: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
+    },
+    /*
+     * Allows user to input date manually
+     */
+    typeable: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     /**
      * If set, lower-level views won't show
@@ -202,6 +211,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'none')
     const pageDate = ref<Date>(new Date())
+    const inputRef = ref(null as HTMLInputElement | null)
 
     const input = ref('')
     watchEffect(() => {
@@ -215,7 +225,7 @@ export default defineComponent({
       () =>
         (input.value =
           props.modelValue && isValid(props.modelValue)
-            ? lightFormat(props.modelValue, props.inputFormat)
+            ? format(props.modelValue, props.inputFormat, {locale: props.locale})
             : '')
     )
 
@@ -256,6 +266,24 @@ export default defineComponent({
       }
     }
 
+    const keyUp = (event: KeyboardEvent) => {
+      const code = (event.keyCode ? event.keyCode : event.which)
+      // close calendar if escape or enter are pressed
+      if ([
+        27, // escape
+        13 // enter
+      ].includes(code)) {
+        inputRef.value!.blur()
+      }
+      if (props.typeable) {
+        const parsedDate = parse(inputRef.value!.value, props.inputFormat, new Date(), { locale: props.locale })
+        if (isValid(parsedDate)) {
+          input.value = inputRef.value!.value
+          emit('update:modelValue', parsedDate)
+        }
+      }
+    }
+
     const initialView = computed(() => {
       const startingViewOrder = TIME_RESOLUTIONS.indexOf(props.startingView)
       const minimumViewOrder = TIME_RESOLUTIONS.indexOf(props.minimumView)
@@ -267,11 +295,13 @@ export default defineComponent({
 
     return {
       input,
+      inputRef,
       pageDate,
       renderView,
       selectYear,
       selectMonth,
       selectDay,
+      keyUp,
       viewShown,
       clearModelValue,
       initialView,

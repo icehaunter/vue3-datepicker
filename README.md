@@ -52,9 +52,32 @@ Full props documentation is available at https://icehaunter.github.io/vue3-datep
 | `weekdayFormat` | `String` | `EE` | `date-fns`-type formatting for a line of weekdays on day view
 | `inputFormat` | `String` | `yyyy-MM-dd` | `date-fns`-type format in which the string in the input should be both parsed and displayed |
 | `locale` | [`Locale`](https://date-fns.org/v2.16.1/docs/I18n#usage) | `date-fns/locale/en` | [`date-fns` locale object](https://date-fns.org/v2.16.1/docs/I18n#usage). Used in string formatting (see default `monthHeadingFormat`)
+| `disabled` | `Boolean` | `false` | Disables datepicker and prevents it's opening
+| `typeable` | `Boolean` | `false` | Allows user to input date manually
 | `weekStartsOn` | `Number` | 1 | Day on which the week should start. Number from 0 to 6, where 0 is Sunday and 6 is Saturday. Week starts with a Monday (1) by default |
 | `clearable` | `Boolean` | `false` | Allows clearing the selected date and setting the value to `null` |
 
 ## Compatibility
 
 Package is transpiled and should be usable for everyone with ES6 and above, but the styling of the datepicker itself uses CSS Grid and CSS variables.
+
+
+## Example
+```vue
+<template>
+  <datepicker v-model="picked" />
+</template>
+
+
+<script>
+import Datepicker from '../src/datepicker/Datepicker.vue'
+components: {
+  Datepicker
+},
+data(): {
+  return {
+    picked: new Date();
+  }
+}
+</script>
+```
