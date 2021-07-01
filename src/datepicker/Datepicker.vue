@@ -1,5 +1,5 @@
 <template>
-  <div class="v3dp__datepicker">
+  <div class="v3dp__datepicker" :style="variables">
     <div class="v3dp__input_wrapper">
       <input
         type="text"
@@ -202,13 +202,13 @@ export default defineComponent({
       default: 'day',
       validate: (v: unknown) =>
         typeof v === 'string' && TIME_RESOLUTIONS.includes(v),
-    }
+    },
   },
   emits: {
     'update:modelValue': (value: Date | null | undefined) =>
       value === null || value === undefined || isValid(value),
   },
-  setup(props, { emit }) {
+  setup(props, { emit, attrs }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'none')
     const pageDate = ref<Date>(new Date())
     const inputRef = ref(null as HTMLInputElement | null)
@@ -225,7 +225,9 @@ export default defineComponent({
       () =>
         (input.value =
           props.modelValue && isValid(props.modelValue)
-            ? format(props.modelValue, props.inputFormat, {locale: props.locale})
+            ? format(props.modelValue, props.inputFormat, {
+                locale: props.locale,
+              })
             : '')
     )
 
@@ -267,16 +269,23 @@ export default defineComponent({
     }
 
     const keyUp = (event: KeyboardEvent) => {
-      const code = (event.keyCode ? event.keyCode : event.which)
+      const code = event.keyCode ? event.keyCode : event.which
       // close calendar if escape or enter are pressed
-      if ([
+      const closeButton = [
         27, // escape
-        13 // enter
-      ].includes(code)) {
+        13, // enter
+      ].includes(code)
+
+      if (closeButton) {
         inputRef.value!.blur()
       }
       if (props.typeable) {
-        const parsedDate = parse(inputRef.value!.value, props.inputFormat, new Date(), { locale: props.locale })
+        const parsedDate = parse(
+          inputRef.value!.value,
+          props.inputFormat,
+          new Date(),
+          { locale: props.locale }
+        )
         if (isValid(parsedDate)) {
           input.value = inputRef.value!.value
           emit('update:modelValue', parsedDate)
@@ -293,6 +302,14 @@ export default defineComponent({
         : props.startingView
     })
 
+    const variables = computed(() =>
+      Object.fromEntries(
+        Object.entries(
+          (attrs?.style as Record<string, string>) ?? {}
+        ).filter(([key, _]) => key.startsWith('--'))
+      )
+    )
+
     return {
       input,
       inputRef,
@@ -306,6 +323,7 @@ export default defineComponent({
       clearModelValue,
       initialView,
       log: (e: any) => console.log(e),
+      variables
     }
   },
 })

@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "ES2019",
     "module": "esnext",
+    "lib": ["ESNext", "DOM"],
     // this enables stricter inference for data properties on `this`
     "strict": true,
     "jsx": "preserve",
