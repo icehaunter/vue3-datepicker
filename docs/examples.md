@@ -125,3 +125,58 @@ Settings:
 
 Result:
 <datepicker v-model="example3" :starting-view="startingView" />
+
+## Clearable
+
+Settings:
+
+- Clear date: <datepicker :clearable="true" />
+
+Result:
+
+<datepicker v-model="pickedDate" :clearable="true" />
+
+<details>
+  <summary>Code for this example</summary>
+
+  ```vue
+  <script setup>
+  import Datepicker from '../src/datepicker/Datepicker.vue'
+  import { ref } from 'vue'
+  const pickedDate = ref(new Date())
+  </script>
+
+  <template>
+    <datepicker
+      v-model="pickedDate"
+      :clearable="{ true }"
+    />
+  </template>
+  ```
+</details>
+
+:::tip
+We can customize clearable view with `slot` for example:
+:::
+<details>
+  <summary>Code for this example</summary>
+
+  ```vue
+  <script setup>
+  import Datepicker from '../src/datepicker/Datepicker.vue'
+  import { ref } from 'vue'
+  const pickedDate = ref(new Date())
+  </script>
+
+  <template>
+    <datepicker
+      v-model="pickedDate"
+      :clearable="{ true }"
+    >
+      <template v-slot:clear="{ onClear }">
+        <button @click="onClear">x</button>
+      </template>
+    </datepicker>
+  </template>
+  ```
+</details>

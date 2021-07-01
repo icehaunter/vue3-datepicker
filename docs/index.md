@@ -69,6 +69,7 @@ More in-depth documentation of the props, as well as examples, can be found in [
 | `disabled` | `Boolean` | `false` | Disables datepicker and prevents it's opening
 | `typeable` | `Boolean` | `false` | Allows user to input date manually
 | `weekStartsOn` | `Number` | 1 | Day on which the week should start. Number from 0 to 6, where 0 is Sunday and 6 is Saturday. Week starts with a Monday (1) by default |
+| `clearable` | `Boolean` | `false` | Allows clearing the selected date and setting the value to `null` |
 
 ## Styling
 

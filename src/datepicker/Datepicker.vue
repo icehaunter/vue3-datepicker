@@ -1,19 +1,26 @@
 <template>
   <div class="v3dp__datepicker">
-    <input
-      type="text"
-      ref="inputRef"
-      :readonly="!typeable"
-      v-model="input"
-      v-bind="$attrs"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :tabindex="disabled ? -1 : 0"
-      @keyup="keyUp"
-      @blur="renderView()"
-      @focus="renderView(initialView)"
-      @click="renderView(initialView)"
-    />
+    <div class="v3dp__input_wrapper">
+      <input
+        type="text"
+        ref="inputRef"
+        :readonly="!typeable"
+        v-model="input"
+        v-bind="$attrs"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :tabindex="disabled ? -1 : 0"
+        @keyup="keyUp"
+        @blur="renderView()"
+        @focus="renderView(initialView)"
+        @click="renderView(initialView)"
+      />
+      <div class="v3dp__clearable" v-show="clearable && modelValue">
+        <slot name="clear" :onClear="clearModelValue">
+          <i @click="clearModelValue()">x</i>
+        </slot>
+      </div>
+    </div>
     <year-picker
       v-show="viewShown === 'year'"
       v-model:pageDate="pageDate"
@@ -171,6 +178,14 @@ export default defineComponent({
       default: false,
     },
     /**
+     * Clears selected date
+     */
+    clearable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    /*
      * Allows user to input date manually
      */
     typeable: {
@@ -245,6 +260,11 @@ export default defineComponent({
 
       viewShown.value = 'none'
     }
+    const clearModelValue = () => {
+      if (props.clearable) {
+        emit('update:modelValue', null)
+      }
+    }
 
     const keyUp = (event: KeyboardEvent) => {
       const code = (event.keyCode ? event.keyCode : event.which)
@@ -283,6 +303,7 @@ export default defineComponent({
       selectDay,
       keyUp,
       viewShown,
+      clearModelValue,
       initialView,
       log: (e: any) => console.log(e),
     }
@@ -318,5 +339,12 @@ export default defineComponent({
   --divider-color: var(--vdp-divider-color, var(--elem-disabled-color));
 
   position: relative;
+}
+
+.v3dp__clearable {
+  display: inline;
+  position: relative;
+  left: -15px;
+  cursor: pointer;
 }
 </style>

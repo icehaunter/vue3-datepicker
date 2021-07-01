@@ -71,6 +71,13 @@ Used in all date string formatting (e.g. see default `monthHeadingFormat`)
 
 Day on which the week should start. Number from 0 to 6, where 0 is Sunday and 6 is Saturday. Week starts with a Monday (1) by default.
 
+### `clearable`
+
+- Type: `Boolean`
+- Default: `false`
+
+Allows clearing the selected date and setting the value to `null`
+
 ### `disabled`
 
 - Type: `Boolean`
