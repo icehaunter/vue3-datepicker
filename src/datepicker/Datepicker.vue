@@ -96,14 +96,14 @@ export default defineComponent({
      * Upper limit for available dates for picking
      */
     upperLimit: {
-      type: Date,
+      type: Date as PropType<Date>,
       required: false,
     },
     /**
      * Lower limit for available dates for picking
      */
     lowerLimit: {
-      type: Date,
+      type: Date as PropType<Date>,
       required: false,
     },
     /**
