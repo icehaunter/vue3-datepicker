@@ -1,5 +1,5 @@
 <template>
-  <div class="v3dp__datepicker" :style="variables">
+  <div class="v3dp__datepicker" :style="variables($attrs.style)">
     <div class="v3dp__input_wrapper">
       <input
         type="text"
@@ -302,13 +302,10 @@ export default defineComponent({
         : props.startingView
     })
 
-    const variables = computed(() =>
+    const variables = (object: { style?: Record<string, string> }) =>
       Object.fromEntries(
-        Object.entries(
-          (attrs?.style as Record<string, string>) ?? {}
-        ).filter(([key, _]) => key.startsWith('--'))
+        Object.entries(object ?? {}).filter(([key, _]) => key.startsWith('--'))
       )
-    )
 
     return {
       input,
@@ -323,7 +320,7 @@ export default defineComponent({
       clearModelValue,
       initialView,
       log: (e: any) => console.log(e),
-      variables
+      variables,
     }
   },
 })
