@@ -126,6 +126,10 @@ Style can be altered significantly without editing CSS files of the components. 
 
 ### Styling example and playground
 
+:::tip
+Note that variables affect only the datepicker popup. If you want to change styles for the input, just pass it in the `:style` prop or use classes.
+:::
+
 <script setup>
 import Datepicker from '../src/datepicker/Datepicker.vue'
 import { ref, reactive, computed } from 'vue'
@@ -162,7 +166,7 @@ const styleObj = computed(() =>
 </script>
 
 <br />
-<datepicker :style="styleObj" v-model="picked" />
+<datepicker :style="{...styleObj, padding: '4px'}" v-model="picked" />
 
 <table>
 <tr v-for="(value, variable) in variables" :key="variable">
