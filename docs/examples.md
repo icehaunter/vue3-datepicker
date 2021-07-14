@@ -149,7 +149,7 @@ Result:
   <template>
     <datepicker
       v-model="pickedDate"
-      :clearable="{ true }"
+      :clearable="true"
     />
   </template>
   ```
@@ -171,7 +171,7 @@ We can customize clearable view with `slot` for example:
   <template>
     <datepicker
       v-model="pickedDate"
-      :clearable="{ true }"
+      :clearable="true"
     >
       <template v-slot:clear="{ onClear }">
         <button @click="onClear">x</button>
