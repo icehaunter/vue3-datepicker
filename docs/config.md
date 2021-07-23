@@ -24,10 +24,11 @@ Lower limit (not inclusive) for available dates for picking. All dates below tha
 
 ### `disabledDates`
 
-- Type: `{ dates: Date[] }`
+- Type: `{ dates: Date[], predicate: (target: Date) => boolean }`
 - Required: no
 
-All dates listed in the dates array will not be selectable.
+All dates listed in the `dates` array will not be selectable. Can also take in a function via the `predicate` key, which
+tests each date in the current view of the calendar, returning `true` if date should be disabled. 
 
 ### `startingView`
 
