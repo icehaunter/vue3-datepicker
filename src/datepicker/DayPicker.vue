@@ -92,7 +92,7 @@ export default defineComponent({
       required: false,
     },
     disabledDates: {
-      type: Object as PropType<{ dates?: Date[] }>,
+      type: Object as PropType<{ dates?: Date[], predicate?: (target: Date) => boolean }>,
       required: false,
     },
   },
@@ -137,9 +137,10 @@ export default defineComponent({
       target: Date,
       lower?: Date,
       upper?: Date,
-      disabledDates?: { dates?: Date[] }
+      disabledDates?: { dates?: Date[], predicate?: (target: Date) => boolean }
     ): boolean => {
       if (disabledDates?.dates?.some(date => isSameDay(target, date))) return false
+			if (disabledDates?.predicate?.(target)) return false
       if (!lower && !upper) return true
       if (lower && isBefore(target, startOfDay(lower))) return false
       if (upper && isAfter(target, endOfDay(upper))) return false

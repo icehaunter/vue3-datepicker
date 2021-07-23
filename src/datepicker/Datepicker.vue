@@ -89,7 +89,7 @@ export default defineComponent({
      * Dates not available for picking
      */
     disabledDates: {
-      type: Object as PropType<{ dates?: Date[] }>,
+      type: Object as PropType<{ dates?: Date[], predicate?: (currentDate: Date) => boolean }>,
       required: false,
     },
     /**

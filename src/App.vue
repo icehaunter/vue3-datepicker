@@ -8,6 +8,7 @@
       :upperLimit="to"
       :lowerLimit="from"
       :clearable="true"
+			:disabledDates="{ predicate: isToday }"
     >
       <template v-slot:clear="{ onClear }">
         <button @click="onClear">x</button>
@@ -61,6 +62,7 @@
 import Datepicker from './datepicker/Datepicker.vue'
 import { defineComponent } from 'vue'
 import { enUS } from 'date-fns/locale'
+import { isSameDay } from 'date-fns'
 
 export default defineComponent({
   name: 'App',
@@ -82,6 +84,11 @@ export default defineComponent({
   watch: {
     selected: (value) => console.log(value),
   },
+	methods: {
+		isToday (date) {
+			return isSameDay(date, new Date())
+		}
+	}
 })
 </script>
 
