@@ -7,6 +7,7 @@
       :locale="locale"
       :upperLimit="to"
       :lowerLimit="from"
+      monthHeadingFormat="LLLL, yyyy"
       :clearable="true"
 			:disabledDates="{ predicate: isToday }"
     >
