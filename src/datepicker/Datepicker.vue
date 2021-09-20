@@ -54,6 +54,15 @@
       @select="selectDay"
       @back="viewShown = 'month'"
     />
+    <time-picker
+      v-show="viewShown === 'time'"
+      v-model:pageDate="pageDate"
+      :visible="viewShown === 'time'"
+      :selected="modelValue"
+      :disabledTime="disabledTime"
+      @select="selectTime"
+      @back="() => (startingView === 'time' && minimumView === 'time') ? null : viewShown = 'day'"
+    />
   </div>
 </template>
 
@@ -63,14 +72,16 @@ import { parse, isValid, setYear, format } from 'date-fns'
 import YearPicker from './YearPicker.vue'
 import MonthPicker from './MonthPicker.vue'
 import DayPicker from './DayPicker.vue'
+import TimePicker from './Timepicker.vue'
 
-const TIME_RESOLUTIONS = ['day', 'month', 'year']
+const TIME_RESOLUTIONS = ['time', 'day', 'month', 'year']
 
 export default defineComponent({
   components: {
     YearPicker,
     MonthPicker,
     DayPicker,
+    TimePicker,
   },
   inheritAttrs: false,
   props: {
@@ -93,6 +104,13 @@ export default defineComponent({
       required: false,
     },
     /**
+     * Time not available for picking
+     */
+    disabledTime: {
+      type: Object as PropType<{ dates?: Date[], predicate?: (currentDate: Date) => boolean }>,
+      required: false,
+    },
+    /**
      * Upper limit for available dates for picking
      */
     upperLimit: {
@@ -107,10 +125,10 @@ export default defineComponent({
       required: false,
     },
     /**
-     * View on which the date picker should open. Can be either `year`, `month`, or `day`
+     * View on which the date picker should open. Can be either `year`, `month`, `day` or `time`
      */
     startingView: {
-      type: String as PropType<'year' | 'month' | 'day'>,
+      type: String as PropType<'year' | 'month' | 'day' | 'time'>,
       required: false,
       default: 'day',
       validate: (v: unknown) =>
@@ -197,7 +215,7 @@ export default defineComponent({
      * If set, lower-level views won't show
      */
     minimumView: {
-      type: String as PropType<'year' | 'month' | 'day'>,
+      type: String as PropType<'year' | 'month' | 'day' | 'time'>,
       required: false,
       default: 'day',
       validate: (v: unknown) =>
@@ -209,7 +227,7 @@ export default defineComponent({
       value === null || value === undefined || isValid(value),
   },
   setup(props, { emit, attrs }) {
-    const viewShown = ref('none' as 'year' | 'month' | 'day' | 'none')
+    const viewShown = ref('none' as 'year' | 'month' | 'day' | 'time' | 'none')
     const pageDate = ref<Date>(new Date())
     const inputRef = ref(null as HTMLInputElement | null)
 
@@ -258,10 +276,22 @@ export default defineComponent({
       }
     }
     const selectDay = (date: Date) => {
+      pageDate.value = date
+  
+      if (props.minimumView === 'day') {
+        viewShown.value = 'none'
+        emit('update:modelValue', date)
+      } else {
+        viewShown.value = 'time'
+      }
+    }
+
+    const selectTime = (date: Date) => {
       emit('update:modelValue', date)
 
       viewShown.value = 'none'
     }
+    
     const clearModelValue = () => {
       if (props.clearable) {
         emit('update:modelValue', null)
@@ -315,6 +345,7 @@ export default defineComponent({
       selectYear,
       selectMonth,
       selectDay,
+      selectTime,
       keyUp,
       viewShown,
       clearModelValue,

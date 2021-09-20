@@ -30,12 +30,20 @@ Lower limit (not inclusive) for available dates for picking. All dates below tha
 All dates listed in the `dates` array will not be selectable. Can also take in a function via the `predicate` key, which
 tests each date in the current view of the calendar, returning `true` if date should be disabled. 
 
+### `disabledTime`
+
+- Type: `{ dates: Date[], predicate: (target: Date) => boolean }`
+- Required: no
+
+All dates listed in the `dates` array will not be selectable in the timepicker view. Can also take in a function via the `predicate` key, which
+tests each date in the timepicker view, returning `true` if date should be disabled. 
+
 ### `startingView`
 
-- Type: `'day' | 'month' | 'year'`
+- Type: `'time' | 'day' | 'month' | 'year'`
 - Default: `'day'`
 
-View on which the date picker should open. Can be either `year`, `month`, or `day`.
+View on which the date picker should open. Can be either `year`, `month`, `day` or `time`. If `startingView` is `time` and `minimumView` is `time` then only view of the calendar `time` will be available.
 
 ### `monthHeadingFormat`
 
