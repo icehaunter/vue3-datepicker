@@ -232,7 +232,11 @@ export default defineComponent({
     )
 
     const renderView = (view: typeof viewShown.value = 'none') => {
-      if (!props.disabled) viewShown.value = view
+      if (!props.disabled) {
+        if(view !== 'none' && viewShown.value === 'none')
+          pageDate.value = props.modelValue || props.lowerLimit || new Date()
+        viewShown.value = view
+      }
     }
     watchEffect(() => {
       if (props.disabled) viewShown.value = 'none'
