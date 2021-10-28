@@ -102,6 +102,13 @@ Disables datepicker and prevents it's opening
 
 Allows user to input date manually
 
+### `allowOutsideInterval`
+
+- Type: `Boolean`
+- Default: `false`
+
+Allows user to click dates outside of current interval.
+
 ## Styling
 
 The input itself can be styled via passing classes to it. [Attribute fallthrough](https://v3.vuejs.org/guide/component-attrs.html#disabling-attribute-inheritance) is enabled. Keep in mind that input itself is not a top-level element, as it is contained within the top-level `div`.

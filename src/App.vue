@@ -41,6 +41,19 @@
   <div>
     <datepicker
       class="picker"
+      v-model="selected"
+      :locale="locale"
+      :upperLimit="to"
+      :lowerLimit="from"
+      :clearable="true"
+      :disabledDates="{ predicate: isToday }"
+      :allow-outside-interval="true"
+      placeholder="allow outside interval"
+    />
+  </div>
+  <div>
+    <datepicker
+      class="picker"
       weekday-format="iiiiii"
       month-list-format="LLLL"
       v-model="from"

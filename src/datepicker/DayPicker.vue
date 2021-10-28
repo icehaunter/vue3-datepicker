@@ -98,6 +98,11 @@ export default defineComponent({
       }>,
       required: false,
     },
+    allowOutsideInterval: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup(props, { emit }) {
     const format = computed(
@@ -159,14 +164,15 @@ export default defineComponent({
         display: dayFormat(value),
         selected: props.selected && isSameDay(props.selected, value),
         disabled:
-          !isWithinInterval(value, currentMonth.value) ||
+          (!props.allowOutsideInterval &&
+            !isWithinInterval(value, currentMonth.value)) ||
           !isEnabled(
             value,
             props.lowerLimit,
             props.upperLimit,
             props.disabledDates
           ),
-        key: format.value('yyyy-MM-dd', value),
+        key: format.value('yyyy-MM-dd')(value),
       }))
     })
 

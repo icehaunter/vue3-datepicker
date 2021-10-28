@@ -51,6 +51,7 @@
       :disabledDates="disabledDates"
       :locale="locale"
       :weekdayFormat="weekdayFormat"
+      :allow-outside-interval="allowOutsideInterval"
       @select="selectDay"
       @back="viewShown = 'month'"
     />
@@ -239,6 +240,14 @@ export default defineComponent({
       default: 'day',
       validate: (v: unknown) =>
         typeof v === 'string' && TIME_RESOLUTIONS.includes(v),
+    },
+    /*
+     * Allow clicking dates in past or next months
+     */
+    allowOutsideInterval: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   emits: {
