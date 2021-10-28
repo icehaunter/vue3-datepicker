@@ -15,8 +15,8 @@
     "url": "https://github.com/icehaunter/vue3-datepicker/issues"
   },
   "private": false,
-  "name": "vue3-datepicker-smoakey22",
-  "version": "0.2.5",
+  "name": "vue3-datepicker-smoakey",
+  "version": "0.2.6",
   "publishConfig": {
     "access": "public"
   },
