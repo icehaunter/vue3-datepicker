@@ -25,6 +25,7 @@
       :clearable="true"
       :disabledDates="{ predicate: isToday }"
       :allow-outside-interval="true"
+      placeholder="allow outside interval"
     />
   </div>
   <div>
