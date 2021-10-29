@@ -23,7 +23,7 @@
       :upperLimit="to"
       :lowerLimit="from"
       :clearable="true"
-			:disabledDates="{ predicate: isToday }"
+      :disabledDates="{ predicate: isToday }"
       :allow-outside-interval="true"
     />
   </div>

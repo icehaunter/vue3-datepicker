@@ -1,7 +1,7 @@
 {
   "author": {
-    "email": "christopher.smoak@gmail.com",
-    "name": "Christopher Smoak"
+    "email": "icehaunter@gmail.com",
+    "name": "Ilya Borovitinov"
   },
   "license": "MIT",
   "engines": {
@@ -15,8 +15,8 @@
     "url": "https://github.com/icehaunter/vue3-datepicker/issues"
   },
   "private": false,
-  "name": "vue3-datepicker-smoakey",
-  "version": "0.2.6",
+  "name": "vue3-datepicker",
+  "version": "0.2.5",
   "publishConfig": {
     "access": "public"
   },
