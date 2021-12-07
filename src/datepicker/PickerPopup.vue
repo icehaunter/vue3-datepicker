@@ -145,13 +145,13 @@ export default defineComponent({
   font-weight: inherit;
 }
 
-.v3dp__popout button {
+.v3dp__popout :deep(button) {
   background: none;
   border: none;
   outline: none;
 }
 
-.v3dp__popout button:not(:disabled) {
+.v3dp__popout :deep(button:not(:disabled)) {
   cursor: pointer;
 }
 
@@ -207,27 +207,27 @@ button.v3dp__heading__center:hover,
   border-radius: 3px;
 }
 
-.v3dp__elements button:disabled {
+.v3dp__elements :deep(button:disabled) {
   color: var(--elem-disabled-color);
 }
 
-.v3dp__elements button {
+.v3dp__elements :deep(button){
   padding: 0.3em 0.6em;
 }
 
-.v3dp__elements button span {
+.v3dp__elements :deep(button span) {
   display: block;
   line-height: 1.9em;
   height: 1.8em;
   border-radius: var(--elem-border-radius);
 }
 
-.v3dp__elements button:not(:disabled):hover span {
+.v3dp__elements :deep(button:not(:disabled):hover span) {
   background-color: var(--elem-hover-bg-color);
   color: var(--elem-hover-color);
 }
 
-.v3dp__elements button.selected span {
+.v3dp__elements :deep(button.selected span) {
   background-color: var(--elem-selected-bg-color);
   color: var(--elem-selected-color);
 }

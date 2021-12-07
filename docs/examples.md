@@ -119,12 +119,13 @@ Result:
 ## Starting view
 Settings: 
 
+- <label>Starting view: <code>time</code> <input type="radio" v-model="startingView" value="time"></label>
 - <label>Starting view: <code>day</code> <input type="radio" v-model="startingView" value="day"></label>
 - <label>Starting view: <code>month</code> <input type="radio" v-model="startingView" value="month"></label>
 - <label>Starting view: <code>year</code> <input type="radio" v-model="startingView" value="year"></label>
 
 Result:
-<datepicker v-model="example3" :starting-view="startingView" />
+<datepicker v-model="example3" :starting-view="startingView" :minimum-view="startingView === 'time' ? 'time' : 'day'" :inputFormat="startingView === 'time' ? 'yyyy-MM-dd HH:mm' : 'yyyy-MM-dd'" />
 
 ## Clearable
 
