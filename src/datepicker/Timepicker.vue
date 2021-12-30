@@ -8,7 +8,7 @@
   >
     <template #heading>{{padStartZero(hours)}}:{{padStartZero(minutes)}}</template>
     <template #body>
-        <div class="v3dp__column">
+        <div ref="hoursListRef" class="v3dp__column">
           <button
             v-for="item in hoursList"
             :key="item.value"
@@ -20,7 +20,7 @@
             <span>{{padStartZero(item.value)}}</span>
           </button>
         </div>
-        <div class="v3dp__column">
+        <div ref="minutesListRef" class="v3dp__column">
           <button
             v-for="item in minutesList"
             :key="item.value"
@@ -53,6 +53,27 @@ interface Item {
   ref: Ref<null | HTMLElement>
 }
 
+function scrollParentToChild(parent: HTMLElement, child: HTMLElement) {
+  const parentRect = parent.getBoundingClientRect();
+  const parentViewableArea = {
+    height: parent.clientHeight,
+    width: parent.clientWidth
+  };
+
+  const childRect = child.getBoundingClientRect();
+  const isViewable = (childRect.top >= parentRect.top) && (childRect.bottom <= parentRect.top + parentViewableArea.height);
+
+  if (!isViewable) {
+    const scrollTop = childRect.top - parentRect.top;
+    const scrollBot = childRect.bottom - parentRect.bottom;
+    if (Math.abs(scrollTop) < Math.abs(scrollBot)) {
+      parent.scrollTop += scrollTop;
+    } else {
+      parent.scrollTop += scrollBot;
+    }
+  }
+}
+
 export default defineComponent({
   components: {
     PickerPopup,
@@ -80,8 +101,11 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const hoursListRef = ref(null as HTMLElement | null)
+    const minutesListRef = ref(null as HTMLElement | null)
+
     const currentDate = computed(() => props.selected ?? props.pageDate)
-    
+
     const hours = ref(currentDate.value.getHours())
     const minutes = ref(currentDate.value.getMinutes())
 
@@ -109,8 +133,8 @@ export default defineComponent({
       const currentMinute = minutesList.value.find((item) => item.ref.value?.classList.contains('selected'))
 
       if (currentHour && currentMinute) {
-        currentHour.ref.value?.scrollIntoView()
-        currentMinute.ref.value?.scrollIntoView()
+        scrollParentToChild(hoursListRef.value!, currentHour.ref.value!)
+        scrollParentToChild(minutesListRef.value!, currentMinute.ref.value!)
       }
     }
 
@@ -133,6 +157,8 @@ export default defineComponent({
     const padStartZero = (item: number): string => `0${item}`.substr(-2)
 
     return {
+      hoursListRef,
+      minutesListRef,
       hours,
       minutes,
       hoursList,
