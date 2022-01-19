@@ -316,7 +316,7 @@ export default defineComponent({
           new Date(),
           { locale: props.locale }
         )
-        if (isValid(parsedDate)) {
+        if (isValid(parsedDate) && input.value.length === props.inputFormat.length) {
           input.value = inputRef.value!.value
           emit('update:modelValue', parsedDate)
         }
