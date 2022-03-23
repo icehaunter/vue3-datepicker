@@ -104,7 +104,7 @@ export default defineComponent({
     const hoursListRef = ref(null as HTMLElement | null)
     const minutesListRef = ref(null as HTMLElement | null)
 
-    const currentDate = computed(() => props.selected ?? props.pageDate)
+    const currentDate = computed(() => props.pageDate ?? props.selected)
 
     const hours = ref(currentDate.value.getHours())
     const minutes = ref(currentDate.value.getMinutes())
