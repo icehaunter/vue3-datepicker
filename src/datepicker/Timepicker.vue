@@ -15,7 +15,7 @@
             :ref="item.ref"
             :class="{ selected: item.selected }"
             :disabled="!isEnabled(item.date)"
-            @click="hours=item.value"
+            @click.stop.prevent="hours=item.value"
           >
             <span>{{padStartZero(item.value)}}</span>
           </button>
@@ -27,7 +27,7 @@
             :ref="item.ref"
             :class="{ selected: item.selected }"
             :disabled="!isEnabled(item.date)"
-            @click="selectMinutes(item)"
+            @click.stop.prevent="selectMinutes(item)"
           >
             <span>{{padStartZero(item.value)}}</span>
           </button>
@@ -108,6 +108,19 @@ export default defineComponent({
 
     const hours = ref(currentDate.value.getHours())
     const minutes = ref(currentDate.value.getMinutes())
+
+    watch(() => props.selected, (value: Date | undefined) => {
+      let newHours = 0
+      let newMinutes = 0
+
+      if (value) {
+        newHours = value.getHours()
+        newMinutes = value.getMinutes()
+      }
+
+      hours.value = newHours
+      minutes.value = newMinutes
+    })
 
     const hoursList: ComputedRef<Item[]> = computed(() => [...Array(24).keys()].map((value) => ({
       value,
