@@ -70,7 +70,7 @@
             v-for="item in items"
             :key="item.key"
             :disabled="item.disabled"
-            :class="{ selected: item.selected }"
+            :class="{ selected: item.selected, currentDate: isCurrentDate(item.value) }"
             @click.stop.prevent="$emit('elementClick', item.value)"
           >
             <span>{{ item.display }}</span>
@@ -122,6 +122,12 @@ export default defineComponent({
       default: (): Item[] => [],
     },
   },
+  methods: {
+    isCurrentDate(dateString){
+      const date = new Date(dateString);
+      return date.toDateString() === new Date().toDateString();
+    }
+  }
 })
 </script>
 
@@ -230,5 +236,10 @@ button.v3dp__heading__center:hover,
 .v3dp__elements :deep(button.selected span) {
   background-color: var(--elem-selected-bg-color);
   color: var(--elem-selected-color);
+}
+
+.v3dp__elements :deep(button.currentDate span) {
+  font-weight: bold;
+  border: 1px solid #333;
 }
 </style>
