@@ -17,7 +17,7 @@ export default [
   {
     output: {
       format: 'esm',
-      file: 'dist/vue3-datepicker.esm.js',
+      file: 'dist/awesome-datepicker-vue-3.esm.js',
     },
     plugins: [
       typescript({ tsconfigOverride, useTsconfigDeclarationDir: true }),
@@ -30,14 +30,14 @@ export default [
   {
     output: {
       format: 'cjs',
-      file: 'dist/vue3-datepicker.cjs.js',
+      file: 'dist/awesome-datepicker-vue-3.cjs.js',
       exports: 'default',
     },
     plugins: [
       typescript({ tsconfigOverride, useTsconfigDeclarationDir: true }),
       vue({ css: false }),
       postcss({
-        extract: path.resolve('dist', 'vue3-datepicker.css'),
+        extract: path.resolve('dist', 'awesome-datepicker-vue-3.css'),
         inject: false,
         plugins: [],
       }),

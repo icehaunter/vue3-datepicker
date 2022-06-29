@@ -1,7 +1,7 @@
 {
   "author": {
-    "email": "icehaunter@gmail.com",
-    "name": "Ilya Borovitinov"
+    "email": "zulfikar1ahmad@gmail.com",
+    "name": "vue 3 date picker"
   },
   "license": "MIT",
   "engines": {
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/icehaunter/vue3-datepicker.git"
+    "url": "https://github.com/zahmadz/vue3-datepicker.git"
   },
   "bugs": {
-    "url": "https://github.com/icehaunter/vue3-datepicker/issues"
+    "url": "https://github.com/zahmadz/vue3-datepicker/issues"
   },
   "private": false,
-  "name": "vue3-datepicker",
-  "version": "0.3.4",
+  "name": "awesome-datepicker-vue-3",
+  "version": "0.0.1",
   "publishConfig": {
     "access": "public"
   },
@@ -30,9 +30,9 @@
     "calendar",
     "date-fns"
   ],
-  "main": "dist/vue3-datepicker.cjs.js",
-  "module": "dist/vue3-datepicker.esm.js",
-  "style": "dist/vue3-datepicker.css",
+  "main": "dist/awesome-datepicker-vue-3.cjs.js",
+  "module": "dist/awesome-datepicker-vue-3.esm.js",
+  "style": "dist/awesome-datepicker-vue-3.css",
   "types": "dist/types/Datepicker.vue.d.ts",
   "files": [
     "src/datepicker",

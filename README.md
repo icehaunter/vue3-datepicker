@@ -1,3 +1,5 @@
+NOTE: This package was modified from icehaunter original vue3-datepicker for support current date styling.
+
 # Vue 3 Datepicker
 
 Documentation: https://icehaunter.github.io/vue3-datepicker/
