@@ -436,6 +436,9 @@ export default defineComponent({
   --elem-selected-color: var(--vdp-selected-color, #fff);
   --elem-selected-bg-color: var(--vdp-selected-bg-color, #0baf74);
 
+  --elem-current-outline-color: var(--vdp-current-date-outline-color, #888);
+  --elem-current-font-weight: var(--vdp-current-date-font-weight, bold);
+
   --elem-font-size: var(--vdp-elem-font-size, 0.8em);
   --elem-border-radius: var(--vdp-elem-border-radius, 3px);
 

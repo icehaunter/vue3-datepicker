@@ -121,25 +121,27 @@ Heavy restyling via variables has not been tested, as I am mostly using this com
 
 Style can be altered significantly without editing CSS files of the components. This is done via CSS variables. Following variables are available:
 
-| Variable name               | Default value  | Type   |
-| --------------------------- | -------------- | ------ |
-| `--vdp-bg-color`            | `#fff`         | color  |
-| `--vdp-text-color`          | `#000`         | color  |
-| `--vdp-box-shadow`          | See source     | shadow |
-| `--vdp-border-radius`       | `3px`          | size   |
-| `--vdp-heading-size`        | `2.5em`        | size   |
-| `--vdp-heading-weight`      | `bold`         | weight |
-| `--vdp-heading-hover-color` | `#eeeeee`      | color  |
-| `--vdp-arrow-color`         | `currentColor` | color  |
-| `--vdp-elem-color`          | `currentColor` | color  |
-| `--vdp-disabled-color`      | `#d5d9e0`      | color  |
-| `--vdp-hover-color`         | `#fff`         | color  |
-| `--vdp-hover-bg-color`      | `#0baf74`      | color  |
-| `--vdp-selected-color`      | `#fff`         | color  |
-| `--vdp-selected-bg-color`   | `#0baf74`      | color  |
-| `--vdp-elem-font-size`      | `0.8em`        | size   |
-| `--vdp-elem-border-radius`  | `3px`          | size   |
-| `--vdp-divider-color`       | `#d5d9e0`      | color  |
+| Variable name                      | Default value  | Type   |
+| ---------------------------------- | -------------- | ------ |
+| `--vdp-bg-color`                   | `#fff`         | color  |
+| `--vdp-text-color`                 | `#000`         | color  |
+| `--vdp-box-shadow`                 | See source     | shadow |
+| `--vdp-border-radius`              | `3px`          | size   |
+| `--vdp-heading-size`               | `2.5em`        | size   |
+| `--vdp-heading-weight`             | `bold`         | weight |
+| `--vdp-heading-hover-color`        | `#eeeeee`      | color  |
+| `--vdp-arrow-color`                | `currentColor` | color  |
+| `--vdp-elem-color`                 | `currentColor` | color  |
+| `--vdp-disabled-color`             | `#d5d9e0`      | color  |
+| `--vdp-hover-color`                | `#fff`         | color  |
+| `--vdp-hover-bg-color`             | `#0baf74`      | color  |
+| `--vdp-selected-color`             | `#fff`         | color  |
+| `--vdp-selected-bg-color`          | `#0baf74`      | color  |
+| `--vdp-current-date-outline-color` | `#888888`      | color  |
+| `--vdp-current-date-font-weight`   | `bold`         | weight |
+| `--vdp-elem-font-size`             | `0.8em`        | size   |
+| `--vdp-elem-border-radius`         | `3px`          | size   |
+| `--vdp-divider-color`              | `#d5d9e0`      | color  |
 
 ### Styling example and playground
 
@@ -167,6 +169,8 @@ const variables = reactive({
   '--vdp-hover-bg-color': { value: '#0baf74', type: 'color' },
   '--vdp-selected-color': { value: '#ffffff', type: 'color' },
   '--vdp-selected-bg-color': { value: '#0baf74', type: 'color' },
+  '--vdp-current-date-outline-color': { value: '#888888', type: 'color'},
+  '--vdp-current-date-font-weight': { value: 'bold', type: 'weight'},
   '--vdp-elem-font-size': { value: '0.8em', type: 'size' },
   '--vdp-elem-border-radius': { value: '3px', type: 'size' },
   '--vdp-divider-color': { value: '#d5d9e0', type: 'color' },

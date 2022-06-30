@@ -158,12 +158,14 @@ export default defineComponent({
     }
 
     const days = computed(() => {
+      const today = new Date()
       const dayFormat = format.value(props.format)
       return eachDayOfInterval(displayedInterval.value).map(
         (value): Item => ({
           value,
           display: dayFormat(value),
           selected: !!props.selected && isSameDay(props.selected, value),
+          current: isSameDay(today, value),
           disabled:
             (!props.allowOutsideInterval &&
               !isWithinInterval(value, currentMonth.value)) ||

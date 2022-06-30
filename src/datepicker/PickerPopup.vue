@@ -70,7 +70,10 @@
             v-for="item in items"
             :key="item.key"
             :disabled="item.disabled"
-            :class="{ selected: item.selected }"
+            :class="{
+              selected: item.selected,
+              current: item.current,
+            }"
             @click.stop.prevent="$emit('elementClick', item.value)"
           >
             <span>{{ item.display }}</span>
@@ -91,6 +94,7 @@ export interface Item {
   display: number | string
   disabled: boolean
   selected: boolean
+  current?: boolean
 }
 
 export default defineComponent({
@@ -230,5 +234,10 @@ button.v3dp__heading__center:hover,
 .v3dp__elements :deep(button.selected span) {
   background-color: var(--elem-selected-bg-color);
   color: var(--elem-selected-color);
+}
+
+.v3dp__elements :deep(button.current span) {
+  font-weight: var(--elem-current-font-weight);
+  outline: 1px solid var(--elem-current-outline-color);
 }
 </style>
