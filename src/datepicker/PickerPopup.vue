@@ -123,7 +123,7 @@ export default defineComponent({
     },
   },
   methods: {
-    isCurrentDate(dateString){
+    isCurrentDate(dateString: Date | string){
       const date = new Date(dateString);
       return date.toDateString() === new Date().toDateString();
     }
