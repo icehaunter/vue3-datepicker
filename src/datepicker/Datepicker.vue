@@ -11,9 +11,9 @@
         :disabled="disabled"
         :tabindex="disabled ? -1 : 0"
         @keyup="keyUp"
-        @blur="renderView()"
-        @focus="renderView(initialView)"
-        @click="renderView(initialView)"
+        @blur="blur"
+        @focus="focus"
+        @click="click"
       />
       <div class="v3dp__clearable" v-show="clearable && modelValue">
         <slot name="clear" :onClear="clearModelValue">
@@ -225,11 +225,14 @@ export default defineComponent({
   emits: {
     'update:modelValue': (value: Date | null | undefined) =>
       value === null || value === undefined || isValid(value),
+    'opened': null,
+    'closed': null
   },
   setup(props, { emit, attrs }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'time' | 'none')
     const pageDate = ref<Date>(new Date())
     const inputRef = ref(null as HTMLInputElement | null)
+    const isFocus = ref(false)
 
     const input = ref('')
     watchEffect(() => {
@@ -250,8 +253,15 @@ export default defineComponent({
     )
 
     const renderView = (view: typeof viewShown.value = 'none') => {
-      if (!props.disabled) viewShown.value = view
+      if (props.disabled) return
+      viewShown.value = view
+      if (view !== 'none') {
+        emit('opened', 'opened')
+      } else {
+        emit('closed', 'closed')
+      }
     }
+
     watchEffect(() => {
       if (props.disabled) viewShown.value = 'none'
     })
@@ -277,7 +287,7 @@ export default defineComponent({
     }
     const selectDay = (date: Date) => {
       pageDate.value = date
-  
+
       if (props.minimumView === 'day') {
         viewShown.value = 'none'
         emit('update:modelValue', date)
@@ -291,11 +301,24 @@ export default defineComponent({
 
       viewShown.value = 'none'
     }
-    
+
     const clearModelValue = () => {
       if (props.clearable) {
         emit('update:modelValue', null)
       }
+    }
+
+    const click = () => {
+      isFocus.value = true
+    }
+
+    const focus = () => {
+      renderView(initialView.value)
+    }
+
+    const blur = () => {
+      isFocus.value = false
+      renderView()
     }
 
     const keyUp = (event: KeyboardEvent) => {
@@ -338,6 +361,9 @@ export default defineComponent({
       )
 
     return {
+      blur,
+      focus,
+      click,
       input,
       inputRef,
       pageDate,

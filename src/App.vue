@@ -2,6 +2,8 @@
   <img alt="Vue logo" src="./assets/logo.png" />
   <div>
     <datepicker
+      @opened="log"
+      @closed="log"
       class="picker"
       v-model="selected"
       :locale="locale"
@@ -17,6 +19,8 @@
   </div>
   <div>
     <datepicker
+      @opened="log"
+      @closed="log"
       class="picker"
       v-model="time"
       :locale="locale"
@@ -29,6 +33,8 @@
   </div>
   <div>
     <datepicker
+      @opened="log"
+      @closed="log"
       class="picker"
       v-model="full"
       :locale="locale"
@@ -40,6 +46,8 @@
   </div>
   <div>
     <datepicker
+      @opened="log"
+      @closed="log"
       class="picker"
       weekday-format="iiiiii"
       month-list-format="LLLL"
@@ -49,10 +57,14 @@
     />
   </div>
   <div>
-    <datepicker class="picker" v-model="to" placeholder="to" />
+    <datepicker
+        @opened="log" @closed="log"
+        class="picker" v-model="to" placeholder="to" />
   </div>
   <div>
     <datepicker
+      @opened="log"
+      @closed="log"
       class="picker"
       v-model="to"
       :locale="locale"
@@ -62,6 +74,8 @@
   </div>
   <div>
     <datepicker
+      @opened="log"
+      @closed="log"
       class="picker"
       v-model="yearSelected"
       :locale="locale"
@@ -71,6 +85,8 @@
   </div>
   <div>
     <datepicker
+      @opened="log"
+      @closed="log"
       class="picker"
       v-model="monthSelected"
       :locale="locale"
@@ -121,7 +137,14 @@ export default defineComponent({
       const newDate = set(new Date(date.getTime()), { hours: 11, minutes: 0 })
       return date < newDate;
     }
-	}
+	},
+  setup() {
+    const log = (v) => console.log(v)
+
+    return {
+      log
+    }
+  }
 })
 </script>
 
