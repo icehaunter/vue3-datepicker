@@ -75,4 +75,4 @@ More in-depth documentation of the props, as well as examples, can be found in [
 
 ## Styling
 
-Styling is done via CSS variables, which control colors used in the popup. All variables, as well as styling example and playground can be found in [Configuration section](/config.html#styling-example-and-playground)
+Styling is done via CSS variables, which control colors used in the popup. All variables, as well as styling example and playground can be found in [Configuration section](/config.html#styling)
