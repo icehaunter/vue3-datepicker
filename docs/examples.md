@@ -24,6 +24,7 @@ const startingView = ref('day')
 # Examples
 
 ## Styling
+
 For styling examples, see [Configuration section](/config#styling-example-and-playground).
 
 ## Basic usage
@@ -47,13 +48,13 @@ For styling examples, see [Configuration section](/config#styling-example-and-pl
   ```
 </details>
 
-
 ## Upper and lower limits
+
 :::tip
 If limit is within the current "view" (e.g. a month), then view changing will be prohibited.
 :::
 
-Settings: 
+Settings:
 
 - Upper limit: <Datepicker v-model="example2_from" />
 - Lower limit: <Datepicker v-model="example2_to" />
@@ -87,7 +88,7 @@ Result:
 
 ## Disabled dates
 
-Settings: 
+Settings:
 
 - Disabled date: <Datepicker v-model="disabledDate" />
 
@@ -117,7 +118,8 @@ Result:
 </details>
 
 ## Starting view
-Settings: 
+
+Settings:
 
 - <label>Starting view: <code>time</code> <input type="radio" v-model="startingView" value="time"></label>
 - <label>Starting view: <code>day</code> <input type="radio" v-model="startingView" value="day"></label>
@@ -140,44 +142,41 @@ Result:
 <details>
   <summary>Code for this example</summary>
 
-  ```vue
-  <script setup>
-  import Datepicker from '../src/datepicker/Datepicker.vue'
-  import { ref } from 'vue'
-  const pickedDate = ref(new Date())
-  </script>
+```vue
+<script setup>
+import Datepicker from '../src/datepicker/Datepicker.vue'
+import { ref } from 'vue'
+const pickedDate = ref(new Date())
+</script>
 
-  <template>
-    <Datepicker
-      v-model="pickedDate"
-      :clearable="true"
-    />
-  </template>
-  ```
+<template>
+  <Datepicker v-model="pickedDate" :clearable="true" />
+</template>
+```
+
 </details>
 
 :::tip
 We can customize clearable view with `slot` for example:
 :::
+
 <details>
   <summary>Code for this example</summary>
 
-  ```vue
-  <script setup>
-  import Datepicker from '../src/datepicker/Datepicker.vue'
-  import { ref } from 'vue'
-  const pickedDate = ref(new Date())
-  </script>
+```vue
+<script setup>
+import Datepicker from '../src/datepicker/Datepicker.vue'
+import { ref } from 'vue'
+const pickedDate = ref(new Date())
+</script>
 
-  <template>
-    <Datepicker
-      v-model="pickedDate"
-      :clearable="true"
-    >
-      <template v-slot:clear="{ onClear }">
-        <button @click="onClear">x</button>
-      </template>
-    </datepicker>
-  </template>
-  ```
+<template>
+  <Datepicker v-model="pickedDate" :clearable="true">
+    <template v-slot:clear="{ onClear }">
+      <button @click="onClear">x</button>
+    </template>
+  </Datepicker>
+</template>
+```
+
 </details>

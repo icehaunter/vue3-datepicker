@@ -35,7 +35,7 @@ import {
   endOfDay,
   startOfDay,
   isValid,
-  format as formatDate
+  format as formatDate,
 } from 'date-fns'
 import PickerPopup from './PickerPopup.vue'
 
@@ -92,16 +92,20 @@ export default defineComponent({
       required: false,
     },
     disabledDates: {
-      type: Object as PropType<{ dates?: Date[], predicate?: (target: Date) => boolean }>,
+      type: Object as PropType<{
+        dates?: Date[]
+        predicate?: (target: Date) => boolean
+      }>,
       required: false,
     },
   },
   setup(props, { emit }) {
-    const format = computed(() =>
-      (format: string) => (value: Date | number) => formatDate(value, format, {
-        locale: props.locale,
-        weekStartsOn: props.weekStartsOn,
-      })
+    const format = computed(
+      () => (format: string) => (value: Date | number) =>
+        formatDate(value, format, {
+          locale: props.locale,
+          weekStartsOn: props.weekStartsOn,
+        })
     )
 
     const monthStart = computed(() => startOfMonth(props.pageDate))
@@ -137,10 +141,11 @@ export default defineComponent({
       target: Date,
       lower?: Date,
       upper?: Date,
-      disabledDates?: { dates?: Date[], predicate?: (target: Date) => boolean }
+      disabledDates?: { dates?: Date[]; predicate?: (target: Date) => boolean }
     ): boolean => {
-      if (disabledDates?.dates?.some(date => isSameDay(target, date))) return false
-			if (disabledDates?.predicate?.(target)) return false
+      if (disabledDates?.dates?.some((date) => isSameDay(target, date)))
+        return false
+      if (disabledDates?.predicate?.(target)) return false
       if (!lower && !upper) return true
       if (lower && isBefore(target, startOfDay(lower))) return false
       if (upper && isAfter(target, endOfDay(upper))) return false
@@ -155,7 +160,12 @@ export default defineComponent({
         selected: props.selected && isSameDay(props.selected, value),
         disabled:
           !isWithinInterval(value, currentMonth.value) ||
-          !isEnabled(value, props.lowerLimit, props.upperLimit, props.disabledDates),
+          !isEnabled(
+            value,
+            props.lowerLimit,
+            props.upperLimit,
+            props.disabledDates
+          ),
         key: format.value('yyyy-MM-dd', value),
       }))
     })

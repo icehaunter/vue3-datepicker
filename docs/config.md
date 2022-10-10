@@ -3,6 +3,7 @@
 ## Props
 
 ### `v-model`
+
 - Type: `Date`
 - Required: yes
 
@@ -28,7 +29,7 @@ Lower limit (not inclusive) for available dates for picking. All dates below tha
 - Required: no
 
 All dates listed in the `dates` array will not be selectable. Can also take in a function via the `predicate` key, which
-tests each date in the current view of the calendar, returning `true` if date should be disabled. 
+tests each date in the current view of the calendar, returning `true` if date should be disabled.
 
 ### `disabledTime`
 
@@ -36,7 +37,7 @@ tests each date in the current view of the calendar, returning `true` if date sh
 - Required: no
 
 All dates listed in the `dates` array will not be selectable in the timepicker view. Can also take in a function via the `predicate` key, which
-tests each date in the timepicker view, returning `true` if date should be disabled. 
+tests each date in the timepicker view, returning `true` if date should be disabled.
 
 ### `startingView`
 

@@ -61,7 +61,7 @@
       :selected="modelValue"
       :disabledTime="disabledTime"
       @select="selectTime"
-      @back="() => (startingView === 'time' && minimumView === 'time') ? null : viewShown = 'day'"
+      @back="goBackFromTimepicker"
     />
   </div>
 </template>
@@ -100,14 +100,20 @@ export default defineComponent({
      * Dates not available for picking
      */
     disabledDates: {
-      type: Object as PropType<{ dates?: Date[], predicate?: (currentDate: Date) => boolean }>,
+      type: Object as PropType<{
+        dates?: Date[]
+        predicate?: (currentDate: Date) => boolean
+      }>,
       required: false,
     },
     /**
      * Time not available for picking
      */
     disabledTime: {
-      type: Object as PropType<{ dates?: Date[], predicate?: (currentDate: Date) => boolean }>,
+      type: Object as PropType<{
+        dates?: Date[]
+        predicate?: (currentDate: Date) => boolean
+      }>,
       required: false,
     },
     /**
@@ -277,7 +283,7 @@ export default defineComponent({
     }
     const selectDay = (date: Date) => {
       pageDate.value = date
-  
+
       if (props.minimumView === 'day') {
         viewShown.value = 'none'
         emit('update:modelValue', date)
@@ -291,7 +297,7 @@ export default defineComponent({
 
       viewShown.value = 'none'
     }
-    
+
     const clearModelValue = () => {
       if (props.clearable) {
         emit('update:modelValue', null)
@@ -316,7 +322,10 @@ export default defineComponent({
           new Date(),
           { locale: props.locale }
         )
-        if (isValid(parsedDate) && input.value.length === props.inputFormat.length) {
+        if (
+          isValid(parsedDate) &&
+          input.value.length === props.inputFormat.length
+        ) {
           input.value = inputRef.value!.value
           emit('update:modelValue', parsedDate)
         }
@@ -337,6 +346,11 @@ export default defineComponent({
         Object.entries(object ?? {}).filter(([key, _]) => key.startsWith('--'))
       )
 
+    const goBackFromTimepicker = () =>
+      props.startingView === 'time' && props.minimumView === 'time'
+        ? null
+        : (viewShown.value = 'day')
+
     return {
       input,
       inputRef,
@@ -348,6 +362,7 @@ export default defineComponent({
       selectTime,
       keyUp,
       viewShown,
+      goBackFromTimepicker,
       clearModelValue,
       initialView,
       log: (e: any) => console.log(e),

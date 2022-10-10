@@ -211,7 +211,7 @@ button.v3dp__heading__center:hover,
   color: var(--elem-disabled-color);
 }
 
-.v3dp__elements :deep(button){
+.v3dp__elements :deep(button) {
   padding: 0.3em 0.6em;
 }
 

@@ -2,20 +2,20 @@ name: Documentation release
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
     paths:
-    - 'docs/**'
-    - 'package.json'
+      - 'docs/**'
+      - 'package.json'
   workflow_dispatch:
 
 jobs:
   build_documentation:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
-        
+
       - name: Build documentation
         run: |
           npm ci

@@ -8,7 +8,7 @@ let tsconfigOverride = {
     target: 'ES6',
     lib: ['ES2020', 'dom'],
     rootDir: 'src/datepicker',
-    declarationDir: "dist/types"
+    declarationDir: 'dist/types',
   },
   include: ['src/**/*'],
 }
