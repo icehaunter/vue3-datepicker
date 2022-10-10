@@ -84,7 +84,6 @@
 <script lang="ts">
 import { isValid } from 'date-fns'
 import { defineComponent, PropType } from 'vue'
-import type { CSSProperties } from 'vue'
 
 export interface Item {
   key: string
