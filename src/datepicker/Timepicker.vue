@@ -170,11 +170,11 @@ export default defineComponent({
     }
 
     const scroll = () => {
-      const currentHour = hoursList.value.find((item) =>
-        item.ref.value?.classList.contains('selected')
+      const currentHour = hoursList.value.find(
+        (item) => item.ref.value?.classList?.contains('selected') ?? false
       )
-      const currentMinute = minutesList.value.find((item) =>
-        item.ref.value?.classList.contains('selected')
+      const currentMinute = minutesList.value.find(
+        (item) => item.ref.value?.classList?.contains('selected') ?? false
       )
 
       if (currentHour && currentMinute) {
