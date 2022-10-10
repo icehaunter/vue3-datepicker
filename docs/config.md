@@ -46,7 +46,7 @@ tests each date in the timepicker view, returning `true` if date should be disab
 
 View on which the date picker should open. Can be either `year`, `month`, `day` or `time`. If `startingView` is `time` and `minimumView` is `time` then only view of the calendar `time` will be available.
 
-### `monthHeadingFormat`
+### `dayPickerHeadingFormat`
 
 - Type: `String` (date-fns [format string](https://date-fns.org/docs/format))
 - Default: `LLLL yyyy`
@@ -72,7 +72,7 @@ View on which the date picker should open. Can be either `year`, `month`, `day` 
 - Type: `Locale` [`date-fns` locale object](https://date-fns.org/v2.16.1/docs/I18n#usage)
 - Default: `date-fns/locale/en`
 
-Used in all date string formatting (e.g. see default `monthHeadingFormat`)
+Used in all date string formatting (e.g. see default `dayPickerHeadingFormat`)
 
 ### `weekStartsOn`
 

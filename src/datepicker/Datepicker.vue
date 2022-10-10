@@ -37,7 +37,7 @@
       :lowerLimit="lowerLimit"
       :upperLimit="upperLimit"
       :format="monthListFormat"
-      :headingFormat="monthHeadingFormat"
+      :headingFormat="dayPickerHeadingFormat"
       :locale="locale"
       @back="viewShown = 'year'"
     />
@@ -143,7 +143,7 @@ export default defineComponent({
     /**
      * `date-fns`-type formatting for a month view heading
      */
-    monthHeadingFormat: {
+    dayPickerHeadingFormat: {
       type: String,
       required: false,
       default: 'LLLL yyyy',
@@ -175,7 +175,7 @@ export default defineComponent({
     },
     /**
      * [`date-fns` locale object](https://date-fns.org/v2.16.1/docs/I18n#usage).
-     * Used in string formatting (see default `monthHeadingFormat`)
+     * Used in string formatting (see default `dayPickerHeadingFormat`)
      */
     locale: {
       type: Object as PropType<Locale>,
