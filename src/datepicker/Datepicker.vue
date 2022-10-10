@@ -68,13 +68,26 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, watchEffect, PropType } from 'vue'
-import { parse, isValid, setYear, format } from 'date-fns'
+import { parse, isValid, setYear, format, max, min } from 'date-fns'
 import YearPicker from './YearPicker.vue'
 import MonthPicker from './MonthPicker.vue'
 import DayPicker from './DayPicker.vue'
 import TimePicker from './Timepicker.vue'
 
 const TIME_RESOLUTIONS = ['time', 'day', 'month', 'year']
+
+const boundedDate = (
+  lower: Date | undefined,
+  upper: Date | undefined,
+  target: Date | undefined = undefined
+) => {
+  let date = target || new Date()
+
+  if (lower) date = max([lower, date])
+  if (upper) date = min([upper, date])
+
+  return date
+}
 
 export default defineComponent({
   components: {
@@ -256,7 +269,12 @@ export default defineComponent({
     )
 
     const renderView = (view: typeof viewShown.value = 'none') => {
-      if (!props.disabled) viewShown.value = view
+      if (!props.disabled) {
+        if (view !== 'none' && viewShown.value === 'none')
+          pageDate.value =
+            props.modelValue || boundedDate(props.lowerLimit, props.upperLimit)
+        viewShown.value = view
+      }
     }
     watchEffect(() => {
       if (props.disabled) viewShown.value = 'none'
