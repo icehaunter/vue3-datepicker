@@ -8,7 +8,7 @@
       :upperLimit="to"
       :lowerLimit="from"
       :clearable="true"
-			:disabledDates="{ predicate: isToday }"
+      :disabledDates="{ predicate: isToday }"
     >
       <template v-slot:clear="{ onClear }">
         <button @click="onClear">x</button>
@@ -36,6 +36,19 @@
       inputFormat="HH:mm dd.MM.yyyy"
       placeholder="date & time"
       :disabledTime="{ dates: disabledTime }"
+    />
+  </div>
+  <div>
+    <datepicker
+      class="picker"
+      v-model="selected"
+      :locale="locale"
+      :upperLimit="to"
+      :lowerLimit="from"
+      :clearable="true"
+      :disabledDates="{ predicate: isToday }"
+      :allow-outside-interval="true"
+      placeholder="allow outside interval"
     />
   </div>
   <div>
@@ -103,8 +116,8 @@ export default defineComponent({
       monthSelected: null,
       disabledTime: [
         set(new Date(), { hours: 11, minutes: 12 }),
-        set(new Date(), { hours: 12, minutes: 30 })
-      ]
+        set(new Date(), { hours: 12, minutes: 30 }),
+      ],
     }
   },
   computed: {
@@ -113,15 +126,15 @@ export default defineComponent({
   watch: {
     selected: (value) => console.log(value),
   },
-	methods: {
-		isToday (date) {
-			return isSameDay(date, new Date())
-		},
+  methods: {
+    isToday(date) {
+      return isSameDay(date, new Date())
+    },
     isMorning(date) {
       const newDate = set(new Date(date.getTime()), { hours: 11, minutes: 0 })
-      return date < newDate;
-    }
-	}
+      return date < newDate
+    },
+  },
 })
 </script>
 

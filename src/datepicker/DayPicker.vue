@@ -35,9 +35,9 @@ import {
   endOfDay,
   startOfDay,
   isValid,
+  format as formatDate,
 } from 'date-fns'
-import { formatWithOptions } from 'date-fns/fp'
-import PickerPopup from './PickerPopup.vue'
+import PickerPopup, { Item } from './PickerPopup.vue'
 
 export default defineComponent({
   components: {
@@ -92,16 +92,25 @@ export default defineComponent({
       required: false,
     },
     disabledDates: {
-      type: Object as PropType<{ dates?: Date[], predicate?: (target: Date) => boolean }>,
+      type: Object as PropType<{
+        dates?: Date[]
+        predicate?: (target: Date) => boolean
+      }>,
       required: false,
+    },
+    allowOutsideInterval: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   setup(props, { emit }) {
-    const format = computed(() =>
-      formatWithOptions({
-        locale: props.locale,
-        weekStartsOn: props.weekStartsOn,
-      })
+    const format = computed(
+      () => (format: string) => (value: Date | number) =>
+        formatDate(value, format, {
+          locale: props.locale,
+          weekStartsOn: props.weekStartsOn,
+        })
     )
 
     const monthStart = computed(() => startOfMonth(props.pageDate))
@@ -137,10 +146,11 @@ export default defineComponent({
       target: Date,
       lower?: Date,
       upper?: Date,
-      disabledDates?: { dates?: Date[], predicate?: (target: Date) => boolean }
+      disabledDates?: { dates?: Date[]; predicate?: (target: Date) => boolean }
     ): boolean => {
-      if (disabledDates?.dates?.some(date => isSameDay(target, date))) return false
-			if (disabledDates?.predicate?.(target)) return false
+      if (disabledDates?.dates?.some((date) => isSameDay(target, date)))
+        return false
+      if (disabledDates?.predicate?.(target)) return false
       if (!lower && !upper) return true
       if (lower && isBefore(target, startOfDay(lower))) return false
       if (upper && isAfter(target, endOfDay(upper))) return false
@@ -149,15 +159,23 @@ export default defineComponent({
 
     const days = computed(() => {
       const dayFormat = format.value(props.format)
-      return eachDayOfInterval(displayedInterval.value).map((value) => ({
-        value,
-        display: dayFormat(value),
-        selected: props.selected && isSameDay(props.selected, value),
-        disabled:
-          !isWithinInterval(value, currentMonth.value) ||
-          !isEnabled(value, props.lowerLimit, props.upperLimit, props.disabledDates),
-        key: format.value('yyyy-MM-dd', value),
-      }))
+      return eachDayOfInterval(displayedInterval.value).map(
+        (value): Item => ({
+          value,
+          display: dayFormat(value),
+          selected: !!props.selected && isSameDay(props.selected, value),
+          disabled:
+            (!props.allowOutsideInterval &&
+              !isWithinInterval(value, currentMonth.value)) ||
+            !isEnabled(
+              value,
+              props.lowerLimit,
+              props.upperLimit,
+              props.disabledDates
+            ),
+          key: format.value('yyyy-MM-dd')(value),
+        })
+      )
     })
 
     const heading = computed(() =>

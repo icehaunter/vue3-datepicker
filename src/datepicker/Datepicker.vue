@@ -1,5 +1,8 @@
 <template>
-  <div class="v3dp__datepicker" :style="variables($attrs.style)">
+  <div
+    class="v3dp__datepicker"
+    :style="variables($attrs.style as Record<string, string> | undefined)"
+  >
     <div class="v3dp__input_wrapper">
       <input
         type="text"
@@ -37,7 +40,7 @@
       :lowerLimit="lowerLimit"
       :upperLimit="upperLimit"
       :format="monthListFormat"
-      :headingFormat="monthHeadingFormat"
+      :headingFormat="dayPickerHeadingFormat"
       :locale="locale"
       @back="viewShown = 'year'"
     />
@@ -61,20 +64,33 @@
       :selected="modelValue"
       :disabledTime="disabledTime"
       @select="selectTime"
-      @back="() => (startingView === 'time' && minimumView === 'time') ? null : viewShown = 'day'"
+      @back="goBackFromTimepicker"
     />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, computed, watchEffect, PropType } from 'vue'
-import { parse, isValid, setYear, format } from 'date-fns'
+import { parse, isValid, setYear, format, max, min } from 'date-fns'
 import YearPicker from './YearPicker.vue'
 import MonthPicker from './MonthPicker.vue'
 import DayPicker from './DayPicker.vue'
 import TimePicker from './Timepicker.vue'
 
 const TIME_RESOLUTIONS = ['time', 'day', 'month', 'year']
+
+const boundedDate = (
+  lower: Date | undefined,
+  upper: Date | undefined,
+  target: Date | undefined = undefined
+) => {
+  let date = target || new Date()
+
+  if (lower) date = max([lower, date])
+  if (upper) date = min([upper, date])
+
+  return date
+}
 
 export default defineComponent({
   components: {
@@ -100,14 +116,20 @@ export default defineComponent({
      * Dates not available for picking
      */
     disabledDates: {
-      type: Object as PropType<{ dates?: Date[], predicate?: (currentDate: Date) => boolean }>,
+      type: Object as PropType<{
+        dates?: Date[]
+        predicate?: (currentDate: Date) => boolean
+      }>,
       required: false,
     },
     /**
      * Time not available for picking
      */
     disabledTime: {
-      type: Object as PropType<{ dates?: Date[], predicate?: (currentDate: Date) => boolean }>,
+      type: Object as PropType<{
+        dates?: Date[]
+        predicate?: (currentDate: Date) => boolean
+      }>,
       required: false,
     },
     /**
@@ -137,7 +159,7 @@ export default defineComponent({
     /**
      * `date-fns`-type formatting for a month view heading
      */
-    monthHeadingFormat: {
+    dayPickerHeadingFormat: {
       type: String,
       required: false,
       default: 'LLLL yyyy',
@@ -169,7 +191,7 @@ export default defineComponent({
     },
     /**
      * [`date-fns` locale object](https://date-fns.org/v2.16.1/docs/I18n#usage).
-     * Used in string formatting (see default `monthHeadingFormat`)
+     * Used in string formatting (see default `dayPickerHeadingFormat`)
      */
     locale: {
       type: Object as PropType<Locale>,
@@ -182,7 +204,7 @@ export default defineComponent({
      * Week starts with a Monday (1) by default
      */
     weekStartsOn: {
-      type: Number,
+      type: Number as PropType<0 | 1 | 2 | 3 | 4 | 5 | 6>,
       required: false,
       default: 1,
       validator: (value: any) => [0, 1, 2, 3, 4, 5, 6].includes(value),
@@ -250,7 +272,12 @@ export default defineComponent({
     )
 
     const renderView = (view: typeof viewShown.value = 'none') => {
-      if (!props.disabled) viewShown.value = view
+      if (!props.disabled) {
+        if (view !== 'none' && viewShown.value === 'none')
+          pageDate.value =
+            props.modelValue || boundedDate(props.lowerLimit, props.upperLimit)
+        viewShown.value = view
+      }
     }
     watchEffect(() => {
       if (props.disabled) viewShown.value = 'none'
@@ -277,7 +304,7 @@ export default defineComponent({
     }
     const selectDay = (date: Date) => {
       pageDate.value = date
-  
+
       if (props.minimumView === 'day') {
         viewShown.value = 'none'
         emit('update:modelValue', date)
@@ -291,7 +318,7 @@ export default defineComponent({
 
       viewShown.value = 'none'
     }
-    
+
     const clearModelValue = () => {
       if (props.clearable) {
         emit('update:modelValue', null)
@@ -316,7 +343,10 @@ export default defineComponent({
           new Date(),
           { locale: props.locale }
         )
-        if (isValid(parsedDate) && input.value.length === props.inputFormat.length) {
+        if (
+          isValid(parsedDate) &&
+          input.value.length === props.inputFormat.length
+        ) {
           input.value = inputRef.value!.value
           emit('update:modelValue', parsedDate)
         }
@@ -332,10 +362,15 @@ export default defineComponent({
         : props.startingView
     })
 
-    const variables = (object: { style?: Record<string, string> }) =>
+    const variables = (object: Record<string, string> | undefined) =>
       Object.fromEntries(
         Object.entries(object ?? {}).filter(([key, _]) => key.startsWith('--'))
       )
+
+    const goBackFromTimepicker = () =>
+      props.startingView === 'time' && props.minimumView === 'time'
+        ? null
+        : (viewShown.value = 'day')
 
     return {
       input,
@@ -348,6 +383,7 @@ export default defineComponent({
       selectTime,
       keyUp,
       viewShown,
+      goBackFromTimepicker,
       clearModelValue,
       initialView,
       log: (e: any) => console.log(e),

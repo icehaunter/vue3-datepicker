@@ -1,7 +1,7 @@
 <template>
   <div
     class="v3dp__popout"
-    :style="{ '--popout-column-definition': `repeat(${columnCount}, 1fr)` }"
+    :style="{ ['--popout-column-definition' as any]: `repeat(${columnCount}, 1fr)` }"
     @mousedown.prevent
   >
     <div class="v3dp__heading">
@@ -84,8 +84,9 @@
 <script lang="ts">
 import { isValid } from 'date-fns'
 import { defineComponent, PropType } from 'vue'
+import type { CSSProperties } from 'vue'
 
-type Item = {
+export interface Item {
   key: string
   value: Date
   display: number | string
@@ -211,7 +212,7 @@ button.v3dp__heading__center:hover,
   color: var(--elem-disabled-color);
 }
 
-.v3dp__elements :deep(button){
+.v3dp__elements :deep(button) {
   padding: 0.3em 0.6em;
 }
 

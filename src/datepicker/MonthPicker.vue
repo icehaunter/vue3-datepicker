@@ -32,9 +32,9 @@ import {
   startOfMonth,
   endOfMonth,
   isValid,
+  format as formatDate,
 } from 'date-fns'
-import PickerPopup from './PickerPopup.vue'
-import { formatWithOptions } from 'date-fns/fp'
+import PickerPopup, { Item } from './PickerPopup.vue'
 
 export default defineComponent({
   components: {
@@ -79,10 +79,11 @@ export default defineComponent({
     const from = computed(() => startOfYear(props.pageDate))
     const to = computed(() => endOfYear(props.pageDate))
 
-    const format = computed(() =>
-      formatWithOptions({
-        locale: props.locale,
-      })(props.format)
+    const format = computed(
+      () => (value: Date | number) =>
+        formatDate(value, props.format, {
+          locale: props.locale,
+        })
     )
 
     const isEnabled = (
@@ -100,13 +101,15 @@ export default defineComponent({
       eachMonthOfInterval({
         start: from.value,
         end: to.value,
-      }).map((value) => ({
-        value,
-        display: format.value(value),
-        key: format.value(value),
-        selected: props.selected && isSameMonth(props.selected, value),
-        disabled: !isEnabled(value, props.lowerLimit, props.upperLimit),
-      }))
+      }).map(
+        (value): Item => ({
+          value,
+          display: format.value(value),
+          key: format.value(value),
+          selected: !!props.selected && isSameMonth(props.selected, value),
+          disabled: !isEnabled(value, props.lowerLimit, props.upperLimit),
+        })
+      )
     )
 
     const heading = computed(() => getYear(from.value))

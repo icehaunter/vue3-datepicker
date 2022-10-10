@@ -3,6 +3,7 @@
 ## Props
 
 ### `v-model`
+
 - Type: `Date`
 - Required: yes
 
@@ -28,7 +29,7 @@ Lower limit (not inclusive) for available dates for picking. All dates below tha
 - Required: no
 
 All dates listed in the `dates` array will not be selectable. Can also take in a function via the `predicate` key, which
-tests each date in the current view of the calendar, returning `true` if date should be disabled. 
+tests each date in the current view of the calendar, returning `true` if date should be disabled.
 
 ### `disabledTime`
 
@@ -36,7 +37,7 @@ tests each date in the current view of the calendar, returning `true` if date sh
 - Required: no
 
 All dates listed in the `dates` array will not be selectable in the timepicker view. Can also take in a function via the `predicate` key, which
-tests each date in the timepicker view, returning `true` if date should be disabled. 
+tests each date in the timepicker view, returning `true` if date should be disabled.
 
 ### `startingView`
 
@@ -45,7 +46,7 @@ tests each date in the timepicker view, returning `true` if date should be disab
 
 View on which the date picker should open. Can be either `year`, `month`, `day` or `time`. If `startingView` is `time` and `minimumView` is `time` then only view of the calendar `time` will be available.
 
-### `monthHeadingFormat`
+### `dayPickerHeadingFormat`
 
 - Type: `String` (date-fns [format string](https://date-fns.org/docs/format))
 - Default: `LLLL yyyy`
@@ -71,7 +72,7 @@ View on which the date picker should open. Can be either `year`, `month`, `day` 
 - Type: `Locale` [`date-fns` locale object](https://date-fns.org/v2.16.1/docs/I18n#usage)
 - Default: `date-fns/locale/en`
 
-Used in all date string formatting (e.g. see default `monthHeadingFormat`)
+Used in all date string formatting (e.g. see default `dayPickerHeadingFormat`)
 
 ### `weekStartsOn`
 
@@ -100,6 +101,13 @@ Disables datepicker and prevents it's opening
 - Default: `false`
 
 Allows user to input date manually
+
+### `allowOutsideInterval`
+
+- Type: `Boolean`
+- Default: `false`
+
+Allows user to click dates outside of current interval.
 
 ## Styling
 
@@ -175,7 +183,7 @@ const styleObj = computed(() =>
 </script>
 
 <br />
-<datepicker :style="{...styleObj, padding: '4px'}" v-model="picked" />
+<Datepicker :style="{...styleObj, padding: '4px'}" v-model="picked" />
 
 <table>
 <tr v-for="(value, variable) in variables" :key="variable">
