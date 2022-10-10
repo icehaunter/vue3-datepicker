@@ -55,6 +55,7 @@ import PickerPopup from './PickerPopup.vue'
 interface Item {
   value: number
   date: Date
+  selected: boolean | undefined
   ref: Ref<null | HTMLElement>
 }
 
@@ -136,16 +137,18 @@ export default defineComponent({
     )
 
     const hoursList: ComputedRef<Item[]> = computed(() =>
-      [...Array(24).keys()].map((value) => ({
-        value,
-        date: set(new Date(currentDate.value.getTime()), {
-          hours: value,
-          minutes: minutes.value,
-          seconds: 0,
-        }),
-        selected: hours.value === value,
-        ref: ref(null),
-      }))
+      [...Array(24).keys()].map(
+        (value): Item => ({
+          value,
+          date: set(new Date(currentDate.value.getTime()), {
+            hours: value,
+            minutes: minutes.value,
+            seconds: 0,
+          }),
+          selected: hours.value === value,
+          ref: ref(null),
+        })
+      )
     )
     const minutesList: ComputedRef<Item[]> = computed(() =>
       [...Array(60).keys()].map((value) => ({

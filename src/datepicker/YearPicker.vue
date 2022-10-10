@@ -26,7 +26,7 @@ import {
   getDecade,
   isValid,
 } from 'date-fns'
-import PickerPopup from './PickerPopup.vue'
+import PickerPopup, { Item } from './PickerPopup.vue'
 
 export default defineComponent({
   components: {
@@ -73,13 +73,16 @@ export default defineComponent({
       eachYearOfInterval({
         start: from.value,
         end: to.value,
-      }).map((value) => ({
-        value,
-        key: String(getYear(value)),
-        display: getYear(value),
-        selected: props.selected && getYear(value) === getYear(props.selected),
-        disabled: !isEnabled(value, props.lowerLimit, props.upperLimit),
-      }))
+      }).map(
+        (value): Item => ({
+          value,
+          key: String(getYear(value)),
+          display: getYear(value),
+          selected:
+            !!props.selected && getYear(value) === getYear(props.selected),
+          disabled: !isEnabled(value, props.lowerLimit, props.upperLimit),
+        })
+      )
     )
 
     const heading = computed(() => {

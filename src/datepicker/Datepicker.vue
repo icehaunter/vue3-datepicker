@@ -1,5 +1,8 @@
 <template>
-  <div class="v3dp__datepicker" :style="variables($attrs.style)">
+  <div
+    class="v3dp__datepicker"
+    :style="variables($attrs.style as Record<string, string> | undefined)"
+  >
     <div class="v3dp__input_wrapper">
       <input
         type="text"
@@ -51,7 +54,6 @@
       :disabledDates="disabledDates"
       :locale="locale"
       :weekdayFormat="weekdayFormat"
-      :allow-outside-interval="allowOutsideInterval"
       @select="selectDay"
       @back="viewShown = 'month'"
     />
@@ -202,7 +204,7 @@ export default defineComponent({
      * Week starts with a Monday (1) by default
      */
     weekStartsOn: {
-      type: Number,
+      type: Number as PropType<0 | 1 | 2 | 3 | 4 | 5 | 6>,
       required: false,
       default: 1,
       validator: (value: any) => [0, 1, 2, 3, 4, 5, 6].includes(value),
@@ -240,14 +242,6 @@ export default defineComponent({
       default: 'day',
       validate: (v: unknown) =>
         typeof v === 'string' && TIME_RESOLUTIONS.includes(v),
-    },
-    /*
-     * Allow clicking dates in past or next months
-     */
-    allowOutsideInterval: {
-      type: Boolean,
-      required: false,
-      default: false,
     },
   },
   emits: {
@@ -368,7 +362,7 @@ export default defineComponent({
         : props.startingView
     })
 
-    const variables = (object: { style?: Record<string, string> }) =>
+    const variables = (object: Record<string, string> | undefined) =>
       Object.fromEntries(
         Object.entries(object ?? {}).filter(([key, _]) => key.startsWith('--'))
       )
