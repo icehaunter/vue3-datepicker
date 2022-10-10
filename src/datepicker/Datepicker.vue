@@ -14,9 +14,9 @@
         :disabled="disabled"
         :tabindex="disabled ? -1 : 0"
         @keyup="keyUp"
-        @blur="renderView()"
-        @focus="renderView(initialView)"
-        @click="renderView(initialView)"
+        @blur="blur"
+        @focus="focus"
+        @click="click"
       />
       <div class="v3dp__clearable" v-show="clearable && modelValue">
         <slot name="clear" :onClear="clearModelValue">
@@ -247,11 +247,14 @@ export default defineComponent({
   emits: {
     'update:modelValue': (value: Date | null | undefined) =>
       value === null || value === undefined || isValid(value),
+    opened: null,
+    closed: null,
   },
   setup(props, { emit, attrs }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'time' | 'none')
     const pageDate = ref<Date>(new Date())
     const inputRef = ref(null as HTMLInputElement | null)
+    const isFocused = ref(false)
 
     const input = ref('')
     watchEffect(() => {
@@ -277,8 +280,15 @@ export default defineComponent({
           pageDate.value =
             props.modelValue || boundedDate(props.lowerLimit, props.upperLimit)
         viewShown.value = view
+
+        if (view !== 'none') {
+          emit('opened')
+        } else {
+          emit('closed')
+        }
       }
     }
+
     watchEffect(() => {
       if (props.disabled) viewShown.value = 'none'
     })
@@ -286,7 +296,7 @@ export default defineComponent({
       pageDate.value = date
 
       if (props.minimumView === 'year') {
-        viewShown.value = 'none'
+        renderView('none')
         emit('update:modelValue', date)
       } else {
         viewShown.value = 'month'
@@ -296,7 +306,7 @@ export default defineComponent({
       pageDate.value = date
 
       if (props.minimumView === 'month') {
-        viewShown.value = 'none'
+        renderView('none')
         emit('update:modelValue', date)
       } else {
         viewShown.value = 'day'
@@ -306,7 +316,7 @@ export default defineComponent({
       pageDate.value = date
 
       if (props.minimumView === 'day') {
-        viewShown.value = 'none'
+        renderView('none')
         emit('update:modelValue', date)
       } else {
         viewShown.value = 'time'
@@ -314,15 +324,23 @@ export default defineComponent({
     }
 
     const selectTime = (date: Date) => {
+      renderView('none')
       emit('update:modelValue', date)
-
-      viewShown.value = 'none'
     }
 
     const clearModelValue = () => {
       if (props.clearable) {
         emit('update:modelValue', null)
       }
+    }
+
+    const click = () => (isFocused.value = true)
+
+    const focus = () => renderView(initialView.value)
+
+    const blur = () => {
+      isFocused.value = false
+      renderView()
     }
 
     const keyUp = (event: KeyboardEvent) => {
@@ -373,6 +391,9 @@ export default defineComponent({
         : (viewShown.value = 'day')
 
     return {
+      blur,
+      focus,
+      click,
       input,
       inputRef,
       pageDate,

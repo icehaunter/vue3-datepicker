@@ -60,6 +60,11 @@ Full props documentation is available at https://icehaunter.github.io/vue3-datep
 | `clearable`              | `Boolean`                                                | `false`              | Allows clearing the selected date and setting the value to `null`                                                                          |
 | `allowOutsideInterval`   | `Boolean`                                                | `false`              | Allows user to click dates outside of current interval                                                                                     |
 
+### Events
+
+- `opened`: Emitted every time the popup opens, including on field focus
+- `closed`: Emitted every time the popup closes, including on field blur
+
 ## Compatibility
 
 Package is transpiled and should be usable for everyone with ES6 and above, but the styling of the datepicker itself uses CSS Grid and CSS variables.

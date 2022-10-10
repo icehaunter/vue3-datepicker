@@ -72,6 +72,11 @@ More in-depth documentation of the props, as well as examples, can be found in [
 | `weekStartsOn`           | `Number`                                                 | 1                    | Day on which the week should start. Number from 0 to 6, where 0 is Sunday and 6 is Saturday. Week starts with a Monday (1) by default      |
 | `clearable`              | `Boolean`                                                | `false`              | Allows clearing the selected date and setting the value to `null`                                                                          |
 
+### Events
+
+- `opened`: Emitted every time the popup opens, including on field focus
+- `closed`: Emitted every time the popup closes, including on field blur
+
 ## Styling
 
 Styling is done via CSS variables, which control colors used in the popup. All variables, as well as styling example and playground can be found in [Configuration section](/config.html#styling-example-and-playground)
