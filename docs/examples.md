@@ -56,8 +56,8 @@ If limit is within the current "view" (e.g. a month), then view changing will be
 
 Settings:
 
-- Upper limit: <Datepicker v-model="example2_from" />
-- Lower limit: <Datepicker v-model="example2_to" />
+- Lower limit: <datepicker v-model="example2_from" />
+- Upper limit: <datepicker v-model="example2_to" />
 
 Result:
 
