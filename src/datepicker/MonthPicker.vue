@@ -32,9 +32,9 @@ import {
   startOfMonth,
   endOfMonth,
   isValid,
+  format as formatDate
 } from 'date-fns'
 import PickerPopup from './PickerPopup.vue'
-import { formatWithOptions } from 'date-fns/fp'
 
 export default defineComponent({
   components: {
@@ -80,9 +80,9 @@ export default defineComponent({
     const to = computed(() => endOfYear(props.pageDate))
 
     const format = computed(() =>
-      formatWithOptions({
+      (value: Date | number) => formatDate(value, props.format, {
         locale: props.locale,
-      })(props.format)
+      })
     )
 
     const isEnabled = (

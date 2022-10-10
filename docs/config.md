@@ -175,7 +175,7 @@ const styleObj = computed(() =>
 </script>
 
 <br />
-<datepicker :style="{...styleObj, padding: '4px'}" v-model="picked" />
+<Datepicker :style="{...styleObj, padding: '4px'}" v-model="picked" />
 
 <table>
 <tr v-for="(value, variable) in variables" :key="variable">

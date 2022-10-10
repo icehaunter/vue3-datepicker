@@ -35,8 +35,8 @@ import {
   endOfDay,
   startOfDay,
   isValid,
+  format as formatDate
 } from 'date-fns'
-import { formatWithOptions } from 'date-fns/fp'
 import PickerPopup from './PickerPopup.vue'
 
 export default defineComponent({
@@ -98,7 +98,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const format = computed(() =>
-      formatWithOptions({
+      (format: string) => (value: Date | number) => formatDate(value, format, {
         locale: props.locale,
         weekStartsOn: props.weekStartsOn,
       })

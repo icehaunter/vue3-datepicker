@@ -28,7 +28,7 @@ For styling examples, see [Configuration section](/config#styling-example-and-pl
 
 ## Basic usage
 
-<datepicker v-model="picked" />
+<Datepicker v-model="picked" />
 
 <details>
   <summary>Code for this example</summary>
@@ -42,7 +42,7 @@ For styling examples, see [Configuration section](/config#styling-example-and-pl
   </script>
 
   <template>
-    <datepicker v-model="picked" />
+    <Datepicker v-model="picked" />
   </template>
   ```
 </details>
@@ -55,12 +55,12 @@ If limit is within the current "view" (e.g. a month), then view changing will be
 
 Settings: 
 
-- Upper limit: <datepicker v-model="example2_from" />
-- Lower limit: <datepicker v-model="example2_to" />
+- Upper limit: <Datepicker v-model="example2_from" />
+- Lower limit: <Datepicker v-model="example2_to" />
 
 Result:
 
-<datepicker v-model="example2" :upper-limit="example2_to" :lower-limit="example2_from" />
+<Datepicker v-model="example2" :upper-limit="example2_to" :lower-limit="example2_from" />
 
 <details>
   <summary>Code for this example</summary>
@@ -76,7 +76,7 @@ Result:
   </script>
 
   <template>
-    <datepicker
+    <Datepicker
       v-model="example2"
       :upper-limit="example2_to"
       :lower-limit="example2_from"
@@ -89,11 +89,11 @@ Result:
 
 Settings: 
 
-- Disabled date: <datepicker v-model="disabledDate" />
+- Disabled date: <Datepicker v-model="disabledDate" />
 
 Result:
 
-<datepicker v-model="pickedDate" :disabledDates="{ dates: [disabledDate] }" />
+<Datepicker v-model="pickedDate" :disabledDates="{ dates: [disabledDate] }" />
 
 <details>
   <summary>Code for this example</summary>
@@ -108,7 +108,7 @@ Result:
   </script>
 
   <template>
-    <datepicker
+    <Datepicker
       v-model="pickedDate"
       :disabledDates="{ dates: [disabledDate] }"
     />
@@ -125,17 +125,17 @@ Settings:
 - <label>Starting view: <code>year</code> <input type="radio" v-model="startingView" value="year"></label>
 
 Result:
-<datepicker v-model="example3" :starting-view="startingView" :minimum-view="startingView === 'time' ? 'time' : 'day'" :inputFormat="startingView === 'time' ? 'yyyy-MM-dd HH:mm' : 'yyyy-MM-dd'" />
+<Datepicker v-model="example3" :starting-view="startingView" :minimum-view="startingView === 'time' ? 'time' : 'day'" :inputFormat="startingView === 'time' ? 'yyyy-MM-dd HH:mm' : 'yyyy-MM-dd'" />
 
 ## Clearable
 
 Settings:
 
-- Clear date: <datepicker :clearable="true" />
+- Clear date: <Datepicker :clearable="true" />
 
 Result:
 
-<datepicker v-model="pickedDate" :clearable="true" />
+<Datepicker v-model="pickedDate" :clearable="true" />
 
 <details>
   <summary>Code for this example</summary>
@@ -148,7 +148,7 @@ Result:
   </script>
 
   <template>
-    <datepicker
+    <Datepicker
       v-model="pickedDate"
       :clearable="true"
     />
@@ -170,7 +170,7 @@ We can customize clearable view with `slot` for example:
   </script>
 
   <template>
-    <datepicker
+    <Datepicker
       v-model="pickedDate"
       :clearable="true"
     >
