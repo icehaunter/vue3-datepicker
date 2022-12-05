@@ -54,6 +54,7 @@
       :disabledDates="disabledDates"
       :locale="locale"
       :weekdayFormat="weekdayFormat"
+      :allow-outside-interval="allowOutsideInterval"
       @select="selectDay"
       @back="viewShown = 'month'"
     />
@@ -121,6 +122,11 @@ export default defineComponent({
         predicate?: (currentDate: Date) => boolean
       }>,
       required: false,
+    },
+    allowOutsideInterval: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     /**
      * Time not available for picking

@@ -166,10 +166,8 @@ export default defineComponent({
           display: dayFormat(value),
           selected: !!props.selected && isSameDay(props.selected, value),
           current: isSameDay(today, value),
-          disabled:
-            (!props.allowOutsideInterval &&
-              !isWithinInterval(value, currentMonth.value)) ||
-            !isEnabled(
+          disabled:(!props.allowOutsideInterval && !isWithinInterval(value, currentMonth.value))
+            || !isEnabled(
               value,
               props.lowerLimit,
               props.upperLimit,
