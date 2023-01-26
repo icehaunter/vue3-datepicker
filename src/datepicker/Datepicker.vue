@@ -133,6 +133,13 @@ export default defineComponent({
       required: false,
     },
     /**
+     * Initial date to display valid month
+     */
+    initDate() {
+      type: Date as PropType<Date>,
+      required: false,
+    },
+    /**
      * Upper limit for available dates for picking
      */
     upperLimit: {
@@ -252,7 +259,7 @@ export default defineComponent({
   },
   setup(props, { emit, attrs }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'time' | 'none')
-    const pageDate = ref<Date>(new Date())
+    const pageDate = ref<Date>(props.initDate || new Date())
     const inputRef = ref(null as HTMLInputElement | null)
     const isFocused = ref(false)
 
