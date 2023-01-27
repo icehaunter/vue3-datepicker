@@ -135,7 +135,7 @@ export default defineComponent({
     /**
      * Initial date to display valid month
      */
-    initDate() {
+    initDate: {
       type: Date as PropType<Date>,
       required: false,
     },
