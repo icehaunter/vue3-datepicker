@@ -15,7 +15,7 @@
       <span
         v-for="(day, index) in weekDays"
         :key="day"
-        :class="`v3dp__weekday_${index}`"
+        :class="`v3dp__subheading__weekday__${index}`"
       >
         {{ day }}
       </span>
