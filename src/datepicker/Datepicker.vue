@@ -40,7 +40,6 @@
       :lowerLimit="lowerLimit"
       :upperLimit="upperLimit"
       :format="monthListFormat"
-      :headingFormat="dayPickerHeadingFormat"
       :locale="locale"
       @back="viewShown = 'year'"
     />
@@ -51,6 +50,7 @@
       :weekStartsOn="weekStartsOn"
       :lowerLimit="lowerLimit"
       :upperLimit="upperLimit"
+      :headingFormat="dayPickerHeadingFormat"
       :disabledDates="disabledDates"
       :locale="locale"
       :weekdayFormat="weekdayFormat"

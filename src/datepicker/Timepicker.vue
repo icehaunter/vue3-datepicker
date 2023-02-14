@@ -4,6 +4,7 @@
     :columnCount="2"
     :leftDisabled="true"
     :rightDisabled="true"
+    viewMode="Time"
     @heading="$emit('back')"
   >
     <template #heading
@@ -15,7 +16,10 @@
           v-for="item in hoursList"
           :key="item.value"
           :ref="item.ref"
-          :class="{ selected: item.selected }"
+          :class="[
+            { selected: item.selected },
+            'v3dp__element_button__hour'
+          ]"
           :disabled="!isEnabled(item.date)"
           @click.stop.prevent="hours = item.value"
         >
@@ -27,7 +31,10 @@
           v-for="item in minutesList"
           :key="item.value"
           :ref="item.ref"
-          :class="{ selected: item.selected }"
+          :class="[
+            { selected: item.selected },
+            'v3dp__element_button__minute'
+          ]"
           :disabled="!isEnabled(item.date)"
           @click.stop.prevent="selectMinutes(item)"
         >
