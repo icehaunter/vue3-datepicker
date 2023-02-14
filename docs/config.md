@@ -66,6 +66,13 @@ View on which the date picker should open. Can be either `year`, `month`, `day` 
 - Default: `EE`
 
 `date-fns`-type formatting for a line of weekdays on day view. By default uses three-letter representation (e.g. Fri).
+### `dayFormat`
+
+- Type: `String` (date-fns [format string](https://date-fns.org/docs/format))
+- Default: `dd`
+
+`date-fns`-type formatting for the day picker view.
+
 
 ### `inputFormat`
 

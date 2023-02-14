@@ -10,6 +10,7 @@
       :upperLimit="to"
       :lowerLimit="from"
       :clearable="true"
+      dayFormat="d"
       :disabledDates="{ predicate: isToday }"
     >
       <template v-slot:clear="{ onClear }">

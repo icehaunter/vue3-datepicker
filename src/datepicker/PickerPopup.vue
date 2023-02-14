@@ -143,8 +143,8 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const popupViewMode = computed(()
-     => props.viewMode.toLowerCase())
+    const popupViewMode = computed(
+      () => props.viewMode.toLowerCase())
 
     return {
       popupViewMode

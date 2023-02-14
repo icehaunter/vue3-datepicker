@@ -55,6 +55,7 @@
       :locale="locale"
       :weekdayFormat="weekdayFormat"
       :allow-outside-interval="allowOutsideInterval"
+      :format="dayFormat"
       @select="selectDay"
       @back="viewShown = 'month'"
     />
@@ -195,6 +196,14 @@ export default defineComponent({
       type: String,
       required: false,
       default: 'EE',
+    },
+    /**
+     * `date-fns`-type formatting for the day picker view
+     */
+    dayFormat: {
+      type: String,
+      required: false,
+      default: 'dd',
     },
     /**
      * `date-fns`-type format in which the string in the input should be both
