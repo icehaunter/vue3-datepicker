@@ -58,7 +58,7 @@ View on which the date picker should open. Can be either `year`, `month`, `day` 
 - Type: `String` (date-fns [format string](https://date-fns.org/docs/format))
 - Default: `LLLL yyyy`
 
-`date-fns`-type formatting for a month view heading. By default prints full month as text and selected year (e.g. January 2021).
+`date-fns`-type formatting for a day view heading. By default prints full month as text and selected year (e.g. January 2021).
 
 ### `weekdayFormat`
 
