@@ -43,16 +43,15 @@
     "dev:docs": "vitepress dev docs",
     "build:component": "vite build",
     "build:docs": "vitepress build docs",
-    "preview:docs": "vitepress preview docs"
+    "preview:docs": "vitepress preview docs",
+    "format": "prettier -w ."
   },
   "devDependencies": {
     "@babel/types": "^7.22.4",
     "@types/node": "^20.2.5",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vue/compiler-sfc": "^3.3.4",
-    "eslint": "^7.29.0",
-    "postcss": "^8.3.5",
-    "prettier": "^2.3.2",
+    "prettier": "^2.8.8",
     "typescript": "^4.8.4",
     "vite": "^4.3.9",
     "vite-plugin-dts": "^2.3.0",

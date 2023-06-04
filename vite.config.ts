@@ -22,19 +22,22 @@ export default defineConfig({
         // for externalized deps
         globals: {
           vue: 'Vue',
-          'date-fns': 'date-fns'
+          'date-fns': 'date-fns',
         },
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') return 'vue3-datepicker.css';
-          return assetInfo.name!;
+          if (assetInfo.name === 'style.css') return 'vue3-datepicker.css'
+          return assetInfo.name!
         },
       },
     },
   },
-  plugins: [vue(), dts({
-    entryRoot: 'src/datepicker',
-    outputDir: 'dist/types'
-  })],
+  plugins: [
+    vue(),
+    dts({
+      entryRoot: 'src/datepicker',
+      outputDir: 'dist/types',
+    }),
+  ],
   optimizeDeps: {
     include: ['date-fns/locale', 'date-fns/fp'],
   },
