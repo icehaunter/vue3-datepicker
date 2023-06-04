@@ -16,7 +16,7 @@
   },
   "private": false,
   "name": "vue3-datepicker",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "publishConfig": {
     "access": "public"
   },
@@ -30,35 +30,33 @@
     "calendar",
     "date-fns"
   ],
-  "main": "dist/vue3-datepicker.cjs.js",
-  "module": "dist/vue3-datepicker.esm.js",
+  "main": "dist/vue3-datepicker.umd.js",
+  "module": "dist/vue3-datepicker.mjs",
   "style": "dist/vue3-datepicker.css",
-  "types": "dist/types/Datepicker.vue.d.ts",
+  "types": "./dist/types/Datepicker.vue.d.ts",
   "files": [
     "src/datepicker",
     "dist"
   ],
   "scripts": {
     "dev": "vite",
-    "build:demo": "vite build",
     "dev:docs": "vitepress dev docs",
-    "build:component": "rollup -c build/rollup.config.js",
-    "build:docs": "vitepress build docs"
+    "build:component": "vite build",
+    "build:docs": "vitepress build docs",
+    "preview:docs": "vitepress preview docs",
+    "format": "prettier -w ."
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^3.1.2",
-    "@vue/compiler-sfc": "^3.1.2",
-    "eslint": "^7.29.0",
-    "postcss": "^8.3.5",
-    "prettier": "^2.3.2",
-    "rollup": "^2.52.6",
-    "rollup-plugin-postcss": "^4.0.0",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "rollup-plugin-vue": "^6.0.0",
+    "@babel/types": "^7.22.4",
+    "@types/node": "^20.2.5",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vue/compiler-sfc": "^3.3.4",
+    "prettier": "^2.8.8",
     "typescript": "^4.8.4",
-    "vite": "^3.1.7",
-    "vitepress": "^1.0.0-alpha.19",
-    "vue": "^3.1.2"
+    "vite": "^4.3.9",
+    "vite-plugin-dts": "^2.3.0",
+    "vitepress": "^1.0.0-beta.1",
+    "vue": "^3.3.4"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
