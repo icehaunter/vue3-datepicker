@@ -4,6 +4,7 @@
     :leftDisabled="leftDisabled"
     :rightDisabled="rightDisabled"
     :items="days"
+    viewMode="day"
     @left="previousPage"
     @right="nextPage"
     @heading="$emit('back')"
@@ -11,7 +12,13 @@
   >
     <template #heading>{{ heading }}</template>
     <template #subheading>
-      <span v-for="day in weekDays" :key="day"> {{ day }} </span>
+      <span
+        v-for="(day, index) in weekDays"
+        :key="day"
+        :class="`v3dp__subheading__weekday__${index}`"
+      >
+        {{ day }}
+      </span>
     </template>
   </picker-popup>
 </template>
