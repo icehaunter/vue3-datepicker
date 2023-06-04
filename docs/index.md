@@ -79,6 +79,9 @@ More in-depth documentation of the props, as well as examples, can be found in [
 
 - `opened`: Emitted every time the popup opens, including on field focus
 - `closed`: Emitted every time the popup closes, including on field blur
+- `decadePageChanged`: Emitted when a page is changed on the year picker view, displaying a different decade. Has a date that is included in the shown decade as an argument.
+- `yearPageChanged`: Emitted when a page is changed on the month picker view, displaying a different year. Has a date that is included in the shown year as an argument.
+- `monthPageChanged`: Emitted when a page is changed on the day picker view, displaying a different month. Has a date that is included in the shown month as an argument.
 
 ## Styling
 

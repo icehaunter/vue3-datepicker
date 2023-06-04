@@ -26,7 +26,8 @@
     </div>
     <year-picker
       v-show="viewShown === 'year'"
-      v-model:pageDate="pageDate"
+      :pageDate="pageDate"
+      @update:pageDate="(v) => updatePageDate('year', v)"
       :selected="modelValue"
       :lowerLimit="lowerLimit"
       :upperLimit="upperLimit"
@@ -34,7 +35,8 @@
     />
     <month-picker
       v-show="viewShown === 'month'"
-      v-model:pageDate="pageDate"
+      :pageDate="pageDate"
+      @update:pageDate="(v) => updatePageDate('month', v)"
       :selected="modelValue"
       @select="selectMonth"
       :lowerLimit="lowerLimit"
@@ -45,7 +47,8 @@
     />
     <day-picker
       v-show="viewShown === 'day'"
-      v-model:pageDate="pageDate"
+      :pageDate="pageDate"
+      @update:pageDate="(v) => updatePageDate('day', v)"
       :selected="modelValue"
       :weekStartsOn="weekStartsOn"
       :lowerLimit="lowerLimit"
@@ -61,7 +64,7 @@
     />
     <time-picker
       v-show="viewShown === 'time'"
-      v-model:pageDate="pageDate"
+      :pageDate="pageDate"
       :visible="viewShown === 'time'"
       :selected="modelValue"
       :disabledTime="disabledTime"
@@ -272,8 +275,11 @@ export default defineComponent({
   emits: {
     'update:modelValue': (value: Date | null | undefined) =>
       value === null || value === undefined || isValid(value),
-    opened: null,
-    closed: null,
+    decadePageChanged: (pageDate: Date) => true,
+    yearPageChanged: (pageDate: Date) => true,
+    monthPageChanged: (pageDate: Date) => true,
+    opened: () => true,
+    closed: () => true,
   },
   setup(props, { emit, attrs }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'time' | 'none')
@@ -318,6 +324,19 @@ export default defineComponent({
     watchEffect(() => {
       if (props.disabled) viewShown.value = 'none'
     })
+
+    const updatePageDate = (
+      view: 'year' | 'month' | 'day',
+      newPageDate: Date
+    ) => {
+      // We need to emit "page changed" event and set the page date
+      pageDate.value = newPageDate
+
+      if (view === 'year') emit('decadePageChanged', newPageDate)
+      else if (view === 'month') emit('yearPageChanged', newPageDate)
+      else if (view === 'day') emit('monthPageChanged', newPageDate)
+    }
+
     const selectYear = (date: Date) => {
       pageDate.value = date
 
@@ -426,6 +445,7 @@ export default defineComponent({
       inputRef,
       pageDate,
       renderView,
+      updatePageDate,
       selectYear,
       selectMonth,
       selectDay,
