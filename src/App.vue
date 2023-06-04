@@ -108,8 +108,10 @@
       v-model="monthSelected"
       :locale="locale"
       minimum-view="month"
-      starting-view="year"
+      starting-view="month"
       placeholder="selectMonth"
+      :starting-view-date="new Date(0)"
+      input-format="yyyy-MM"
     />
   </div>
 </template>

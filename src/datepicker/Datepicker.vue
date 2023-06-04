@@ -139,13 +139,6 @@ export default defineComponent({
       required: false,
     },
     /**
-     * Initial date to display valid month
-     */
-    initDate: {
-      type: Date as PropType<Date>,
-      required: false,
-    },
-    /**
      * Upper limit for available dates for picking
      */
     upperLimit: {
@@ -168,6 +161,16 @@ export default defineComponent({
       default: 'day',
       validate: (v: unknown) =>
         typeof v === 'string' && TIME_RESOLUTIONS.includes(v),
+    },
+    /**
+     * Date which should be the "center" of the initial view.
+     * When an empty datepicker opens, it focuses on the month/year
+     * that contains this date
+     */
+    startingViewDate: {
+      type: Date as PropType<Date>,
+      required: false,
+      default: () => new Date(),
     },
     /**
      * `date-fns`-type formatting for a month view heading
@@ -265,7 +268,7 @@ export default defineComponent({
   },
   setup(props, { emit, attrs }) {
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'time' | 'none')
-    const pageDate = ref<Date>(props.initDate || new Date())
+    const pageDate = ref<Date>(props.startingViewDate)
     const inputRef = ref(null as HTMLInputElement | null)
     const isFocused = ref(false)
 
@@ -291,7 +294,8 @@ export default defineComponent({
       if (!props.disabled) {
         if (view !== 'none' && viewShown.value === 'none')
           pageDate.value =
-            props.modelValue || boundedDate(props.lowerLimit, props.upperLimit)
+            props.modelValue ||
+            boundedDate(props.lowerLimit, props.upperLimit, pageDate.value)
         viewShown.value = view
 
         if (view !== 'none') {

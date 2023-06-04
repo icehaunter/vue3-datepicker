@@ -23,6 +23,12 @@ Upper limit (not inclusive) for available dates for picking. All dates above tha
 
 Lower limit (not inclusive) for available dates for picking. All dates below that limit will not be selectable.
 
+## `startingViewDate`
+- Type: `Date`
+- Default: `new Date()` (right now)
+
+When opening the empty datepicker, this date will be "focused": the month of this date will be shown on the day picker view, the year of this date will be shown in the month picker view, and the decade of this date will be shown in the year picker view.
+
 ### `disabledDates`
 
 - Type: `{ dates: Date[], predicate: (target: Date) => boolean }`
