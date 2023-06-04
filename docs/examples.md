@@ -74,6 +74,7 @@ For styling examples, see [Configuration section](/config#styling-example-and-pl
   </template>
   ```
 </details>
+
 ## Upper and lower limits
 
 :::tip

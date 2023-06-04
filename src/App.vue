@@ -4,7 +4,10 @@
     <datepicker
       @opened="log('opened')"
       @closed="log('closed')"
-      @pageChanged="(view, date) => log(`Page changed on view ${view} to include date ${date}`)"
+      @pageChanged="
+        (view, date) =>
+          log(`Page changed on view ${view} to include date ${date}`)
+      "
       class="picker"
       v-model="selected"
       :locale="locale"
