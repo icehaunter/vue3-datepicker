@@ -66,7 +66,9 @@ Full props documentation is available at https://icehaunter.github.io/vue3-datep
 
 - `opened`: Emitted every time the popup opens, including on field focus
 - `closed`: Emitted every time the popup closes, including on field blur
-
+- `decadePageChanged`: Emitted when a page is changed on the year picker view, displaying a different decade. Has a date that is included in the shown decade as an argument.
+- `yearPageChanged`: Emitted when a page is changed on the month picker view, displaying a different year. Has a date that is included in the shown year as an argument.
+- `monthPageChanged`: Emitted when a page is changed on the day picker view, displaying a different month. Has a date that is included in the shown month as an argument.
 ## Compatibility
 
 Package is transpiled and should be usable for everyone with ES6 and above, but the styling of the datepicker itself uses CSS Grid and CSS variables.
