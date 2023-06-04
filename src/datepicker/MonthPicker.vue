@@ -5,7 +5,7 @@
     :items="months"
     :leftDisabled="leftDisabled"
     :rightDisabled="rightDisabled"
-    viewMode="Month"
+    viewMode="month"
     @left="previousPage"
     @right="nextPage"
     @heading="$emit('back')"

@@ -1,7 +1,7 @@
 <template>
   <div
     class="v3dp__popout"
-    :class="`v3dp__popout-${popupViewMode}`"
+    :class="`v3dp__popout-${viewMode}`"
     :style="{ ['--popout-column-definition' as any]: `repeat(${columnCount}, 1fr)` }"
     @mousedown.prevent
   >
@@ -76,7 +76,7 @@
                 selected: item.selected,
                 current: item.current,
               },
-              `v3dp__element__button__${popupViewMode}`
+              `v3dp__element__button__${viewMode}`,
             ]"
             @click.stop.prevent="$emit('elementClick', item.value)"
           >
@@ -101,13 +101,8 @@ export interface Item {
   current?: boolean
 }
 
-export enum ViewMode {
-    Year,
-    Month,
-    Day,
-    Time,
-    Custom
-}
+export type ViewMode = 'year' | 'month' | 'day' | 'time' | 'custom'
+const VIEW_MODES = ['year', 'month', 'day', 'time', 'custom']
 
 export default defineComponent({
   emits: {
@@ -139,16 +134,9 @@ export default defineComponent({
     },
     viewMode: {
       type: String as PropType<ViewMode>,
-      default: (): ViewMode => Custom,
-    }
-  },
-  setup(props) {
-    const popupViewMode = computed(
-      () => props.viewMode.toLowerCase())
-
-    return {
-      popupViewMode
-    }
+      required: true,
+      validate: (x: unknown) => typeof x === 'string' && VIEW_MODES.includes(x),
+    },
   },
 })
 </script>

@@ -4,7 +4,7 @@
     :leftDisabled="leftDisabled"
     :rightDisabled="rightDisabled"
     :items="days"
-    viewMode="Day"
+    viewMode="day"
     @left="previousPage"
     @right="nextPage"
     @heading="$emit('back')"
