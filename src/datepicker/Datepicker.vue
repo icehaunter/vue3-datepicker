@@ -76,7 +76,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, watchEffect, PropType } from 'vue'
-import { parse, isValid, setYear, format, max, min } from 'date-fns'
+import { parse, isValid, format, max, min } from 'date-fns'
 import YearPicker from './YearPicker.vue'
 import MonthPicker from './MonthPicker.vue'
 import DayPicker from './DayPicker.vue'
@@ -289,7 +289,9 @@ export default defineComponent({
 
     const input = ref('')
     watchEffect(() => {
-      const parsed = parse(input.value, props.inputFormat, new Date())
+      const parsed = parse(input.value, props.inputFormat, new Date(), {
+        locale: props.locale,
+      })
       if (isValid(parsed)) {
         pageDate.value = parsed
       }
@@ -408,9 +410,12 @@ export default defineComponent({
           new Date(),
           { locale: props.locale }
         )
+
+        // If the date is formatted back same way as it was inputted, then we're not disturbing user input
         if (
           isValid(parsedDate) &&
-          input.value.length === props.inputFormat.length
+          input.value ===
+            format(parsedDate, props.inputFormat, { locale: props.locale })
         ) {
           input.value = inputRef.value!.value
           emit('update:modelValue', parsedDate)

@@ -6,6 +6,8 @@ import { add } from 'date-fns'
 // Ex 1
 const picked = ref(new Date())
 
+const typeable = ref(null)
+
 // Ex 2
 const example2 = ref(new Date())
 const example2_from = ref(add(new Date(), { days: -7 }))
@@ -18,6 +20,10 @@ const disabledDate = ref(add(new Date(), { days: 1 }))
 // Ex 3
 const example3 = ref(new Date())
 const startingView = ref('day')
+
+// Ex 4
+const example4 = ref(new Date())
+const minimumView = ref('day')
 
 </script>
 
@@ -48,6 +54,26 @@ For styling examples, see [Configuration section](/config#styling-example-and-pl
   ```
 </details>
 
+## Typeable input
+
+<Datepicker v-model="typeable" typeable  inputFormat="yyyy-MM-d" />
+
+<details>
+  <summary>Code for this example</summary>
+  
+  ```vue
+  <script setup>
+  import Datepicker from '../src/datepicker/Datepicker.vue'
+  import { ref } from 'vue'
+  const picked = ref(new Date())
+
+  </script>
+
+  <template>
+    <Datepicker v-model="typeable" typeable />
+  </template>
+  ```
+</details>
 ## Upper and lower limits
 
 :::tip
@@ -129,13 +155,19 @@ Settings:
 Result:
 <Datepicker v-model="example3" :starting-view="startingView" :minimum-view="startingView === 'time' ? 'time' : 'day'" :inputFormat="startingView === 'time' ? 'yyyy-MM-dd HH:mm' : 'yyyy-MM-dd'" />
 
-## Clearable
+## Mininimal view
 
 Settings:
 
-- Clear date: <Datepicker :clearable="true" />
+- <label>Minimum view: <code>time</code> <input type="radio" v-model="minimumView" value="time"></label>
+- <label>Minimum view: <code>day</code> <input type="radio" v-model="minimumView" value="day"></label>
+- <label>Minimum view: <code>month</code> <input type="radio" v-model="minimumView" value="month"></label>
+- <label>Minimum view: <code>year</code> <input type="radio" v-model="minimumView" value="year"></label>
 
 Result:
+<Datepicker v-model="example4" :minimum-view="minimumView" :inputFormat="minimumView === 'time' ? 'yyyy-MM-dd HH:mm' : 'yyyy-MM-dd'" />
+
+## Clearable
 
 <Datepicker v-model="pickedDate" :clearable="true" />
 
@@ -160,6 +192,12 @@ const pickedDate = ref(new Date())
 We can customize clearable view with `slot` for example:
 :::
 
+<Datepicker v-model="pickedDate" :clearable="true" placeholder="placeholder">
+  <template v-slot:clear="{ onClear }">
+    <button @click="onClear" style="color: red">x</button>
+  </template>
+</Datepicker>
+
 <details>
   <summary>Code for this example</summary>
 
@@ -171,9 +209,9 @@ const pickedDate = ref(new Date())
 </script>
 
 <template>
-  <Datepicker v-model="pickedDate" :clearable="true">
+  <Datepicker v-model="pickedDate" :clearable="true" placeholder="placeholder">
     <template v-slot:clear="{ onClear }">
-      <button @click="onClear">x</button>
+      <button @click="onClear" style="color: red">x</button>
     </template>
   </Datepicker>
 </template>
