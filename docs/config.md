@@ -24,6 +24,7 @@ Upper limit (not inclusive) for available dates for picking. All dates above tha
 Lower limit (not inclusive) for available dates for picking. All dates below that limit will not be selectable.
 
 ## `startingViewDate`
+
 - Type: `Date`
 - Default: `new Date()` (right now)
 
