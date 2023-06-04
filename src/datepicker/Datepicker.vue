@@ -356,7 +356,9 @@ export default defineComponent({
 
     const clearModelValue = () => {
       if (props.clearable) {
+        renderView('none')
         emit('update:modelValue', null)
+        pageDate.value = props.startingViewDate
       }
     }
 
