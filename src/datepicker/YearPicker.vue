@@ -4,6 +4,7 @@
     :leftDisabled="leftDisabled"
     :rightDisabled="rightDisabled"
     :items="years"
+    viewMode="year"
     @left="previousPage"
     @right="nextPage"
     @elementClick="$emit('select', $event)"

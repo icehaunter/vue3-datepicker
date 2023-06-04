@@ -1,12 +1,13 @@
 <template>
   <div
     class="v3dp__popout"
+    :class="`v3dp__popout-${viewMode}`"
     :style="{ ['--popout-column-definition' as any]: `repeat(${columnCount}, 1fr)` }"
     @mousedown.prevent
   >
     <div class="v3dp__heading">
       <button
-        class="v3dp__heading__button"
+        class="v3dp__heading__button v3dp__heading__button__left"
         :disabled="leftDisabled"
         @click.stop.prevent="$emit('left')"
       >
@@ -35,7 +36,7 @@
         <slot name="heading" />
       </component>
       <button
-        class="v3dp__heading__button"
+        class="v3dp__heading__button v3dp__heading__button__right"
         :disabled="rightDisabled"
         @click.stop.prevent="$emit('right')"
       >
@@ -70,10 +71,13 @@
             v-for="item in items"
             :key="item.key"
             :disabled="item.disabled"
-            :class="{
-              selected: item.selected,
-              current: item.current,
-            }"
+            :class="[
+              {
+                selected: item.selected,
+                current: item.current,
+              },
+              `v3dp__element__button__${viewMode}`,
+            ]"
             @click.stop.prevent="$emit('elementClick', item.value)"
           >
             <span>{{ item.display }}</span>
@@ -86,7 +90,7 @@
 
 <script lang="ts">
 import { isValid } from 'date-fns'
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, computed } from 'vue'
 
 export interface Item {
   key: string
@@ -96,6 +100,9 @@ export interface Item {
   selected: boolean
   current?: boolean
 }
+
+export type ViewMode = 'year' | 'month' | 'day' | 'time' | 'custom'
+const VIEW_MODES = ['year', 'month', 'day', 'time', 'custom']
 
 export default defineComponent({
   emits: {
@@ -124,6 +131,11 @@ export default defineComponent({
     items: {
       type: Array as PropType<Item[]>,
       default: (): Item[] => [],
+    },
+    viewMode: {
+      type: String as PropType<ViewMode>,
+      required: true,
+      validate: (x: unknown) => typeof x === 'string' && VIEW_MODES.includes(x),
     },
   },
 })
