@@ -16,7 +16,7 @@
   },
   "private": false,
   "name": "vue3-datepicker",
-  "version": "0.3.8",
+  "version": "0.4.0",
   "publishConfig": {
     "access": "public"
   },
@@ -32,7 +32,6 @@
   ],
   "main": "dist/vue3-datepicker.umd.js",
   "module": "dist/vue3-datepicker.mjs",
-  "style": "dist/vue3-datepicker.css",
   "types": "./dist/types/Datepicker.vue.d.ts",
   "files": [
     "src/datepicker",
@@ -54,6 +53,7 @@
     "prettier": "^2.8.8",
     "typescript": "^4.8.4",
     "vite": "^4.3.9",
+    "vite-plugin-css-injected-by-js": "^3.1.1",
     "vite-plugin-dts": "^2.3.0",
     "vitepress": "^1.0.0-beta.1",
     "vue": "^3.3.4"
