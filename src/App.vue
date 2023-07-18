@@ -14,6 +14,9 @@
       :upperLimit="to"
       :lowerLimit="from"
       :clearable="true"
+      :typeable="true"
+      :input-format="'dd/MM/yyyy'"
+      :mask="true"
       dayFormat="d"
       :disabledDates="{ predicate: isToday }"
     >

@@ -271,6 +271,14 @@ export default defineComponent({
       validate: (v: unknown) =>
         typeof v === 'string' && TIME_RESOLUTIONS.includes(v),
     },
+    /*
+     * If typeable is true,  enables automatic date formatting (masking) as the user types
+     */
+    mask: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   emits: {
     'update:modelValue': (value: Date | null | undefined) =>
@@ -404,6 +412,46 @@ export default defineComponent({
         inputRef.value!.blur()
       }
       if (props.typeable) {
+
+        if(props.mask){
+
+            if(!([event.key, event.code].includes("Backspace"))){
+
+                let value = inputRef.value!.value;
+                const key = event.key;
+
+                if ("0123456789".includes(key)) { // If the key is a number
+                    value = value.slice(0, -1); // Remove the last character added automatically to the value
+            
+                    // Check if a separator should be added at the current position
+                    const separator = separators.find(item => value.length === item.idx);
+                    if(separator) {
+                        value += separator.char; // Aggiunge il separatore
+                    }
+            
+                    value += key; // Add the key pressed to the value
+
+                } else {
+
+                    // If the key is not a number, check if it's being inserted at a separator position
+                    const separator = separators.find(item => value.length === item.idx + 1);
+                    if(separator) {
+                        // If a separator should be at this position, replace the character with the correct separator
+                        value = value.slice(0, -1) + separator.char; // Aggiunge il separatore
+                    }
+                }
+
+                // Check again if a separator should be added at the current position
+                const separator = separators.find(item => value.length === item.idx);
+                if(separator) {
+                    value += separator.char;
+                }
+                inputRef.value!.value = value;
+
+            } 
+
+        }
+
         const parsedDate = parse(
           inputRef.value!.value,
           props.inputFormat,
@@ -441,6 +489,22 @@ export default defineComponent({
       props.startingView === 'time' && props.minimumView === 'time'
         ? null
         : (viewShown.value = 'day')
+
+    const getSeparatorIndices = (_format: string) => {
+        const separatorItems = [];
+
+        for (let i = 0; i < _format.length; i++) {
+
+            if(!(/^[0-9a-zA-Z]+$/.test(_format[i]))) {
+                separatorItems.push({ idx: i, char:  _format[i]});
+            }
+        }
+
+        return separatorItems;
+    }
+
+    const separators = getSeparatorIndices(props.inputFormat);
+
 
     return {
       blur,
