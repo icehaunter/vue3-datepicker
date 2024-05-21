@@ -285,7 +285,6 @@ export default defineComponent({
     const viewShown = ref('none' as 'year' | 'month' | 'day' | 'time' | 'none')
     const pageDate = ref<Date>(props.startingViewDate)
     const inputRef = ref(null as HTMLInputElement | null)
-    const isFocused = ref(false)
 
     const input = ref('')
     watchEffect(() => {
@@ -383,12 +382,11 @@ export default defineComponent({
       }
     }
 
-    const click = () => (isFocused.value = true)
+    const click = () => renderView(initialView.value)
 
     const focus = () => renderView(initialView.value)
 
     const blur = () => {
-      isFocused.value = false
       renderView()
     }
 
